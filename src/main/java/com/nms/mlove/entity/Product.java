@@ -30,16 +30,16 @@ public abstract class Product extends BaseEntity {
 
     @NotNull
     @Size(max = 150)
-    @Column(name = "TITLE", length = 150, unique = true, nullable = false)
+    @Column(name = "TITLE", length = 150, nullable = false)
     protected String title;
 
     @Size(max = 4000)
     @Column(name = "CONTENT", length = 2000)
-    protected String content;
+    private String content;
 
     @NotNull
     @Size(max = 200)
-    @Column(name = "URL_TITLE", length = 200, unique = true, nullable = false)
+    @Column(name = "URL_TITLE", length = 200, nullable = false)
     protected String friendlyTitle;
 
     @Min(0)
@@ -56,9 +56,10 @@ public abstract class Product extends BaseEntity {
 
     @Column(name = "PROMOTION")
     protected boolean promotion;
+    
     @Min(0)
     @Column(name = "PROMO_PRICE")
-    protected boolean promoPrice;
+    private double promoPrice;
 
     public String getTitle() {
         return title;
@@ -108,19 +109,27 @@ public abstract class Product extends BaseEntity {
         this.promotion = promotion;
     }
 
-    public boolean isPromoPrice() {
-        return promoPrice;
+    public void setPromoPrice(double promoPrice) {
+        this.promoPrice = promoPrice;
+    }
+    
+    public String getContent() {
+        return content;
     }
 
-    public void setPromoPrice(boolean promoPrice) {
-        this.promoPrice = promoPrice;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public double getPromoPrice() {
+        return promoPrice;
     }
 
     @Override
     public String toString() {
         return "BaseProduct{" + "title=" + title + ", friendlyTitle=" + friendlyTitle
                 + ", viewCount=" + viewCount + ", downCount=" + downCount + ", price=" + price
-                + ", promotion=" + promotion + ", promoPrice=" + promoPrice + '}';
+                + ", promotion=" + promotion + ", promoPrice=" + getPromoPrice() + '}';
     }
 
     @PrePersist
