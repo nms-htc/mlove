@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:dialog id="dlgUpload" header="Upload File" modal="true" widgetVar="dlgUpload">
+        <h:form id="frmUpload">
+            <h:panelGrid columns="2" width="100%" >
+                <p:outputLabel for="title" value="Title"/>
+                <p:inputText id="title" size="35" value="#{fileController.current.title}"/>
+                
+                <p:outputLabel for="title" value="Browse"/>
+                <p:fileUpload fileUploadListener="#{fileController.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                              update=":growl" sizeLimit="#{fileController.fileLimit == 0 ? 9999999999 : fileController.fileLimit}" 
+                              fileLimit="1" allowTypes="/(\\.|\\/)(#{fileController.fileType})$/" />
+                
+                <p:outputLabel for="content" value="Content"/>
+                <p:inputTextarea id="content" rows="6" cols="50" value="#{fileController.current.description}"/>
+                
+                <p:commandButton value="Create" icon="ui-icon-document" 
+                                 actionListener="#{fileController.persist()}"
+                                 update=":fmCreate"
+                                 oncomplete="submitHandle(xhr, status, args, 'dlgUpload');"
+                                 />
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:composition>

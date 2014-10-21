@@ -18,6 +18,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "ML_FILE")
 @XmlRootElement
 public class File extends BaseEntity {
+    
+    public enum FileType {
+        IMAGE,
+        MUSIC,
+        VIDEO
+    }
 
     private static final long serialVersionUID = -2874867851464343753L;
 
@@ -28,7 +34,7 @@ public class File extends BaseEntity {
     protected String contentType;
 
     @Column(name = "FILESIZE")
-    protected int fileSize;
+    protected long fileSize;
 
     @Column(name = "FILEPATH", length = 250)
     protected String filePath;
@@ -39,7 +45,21 @@ public class File extends BaseEntity {
     @Transient
     @XmlTransient
     protected InputStream is;
+    
+    @Transient
+    @XmlTransient
+    protected FileType fileType = FileType.IMAGE;
 
+    public FileType getFileType()
+    {
+        return fileType;
+    }
+
+    public void setFileType(FileType fileType)
+    {
+        this.fileType = fileType;
+    }
+    
     public File() {
     }
 
@@ -59,11 +79,11 @@ public class File extends BaseEntity {
         this.contentType = contentType;
     }
 
-    public int getFileSize() {
+    public long getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(int fileSize) {
+    public void setFileSize(long fileSize) {
         this.fileSize = fileSize;
     }
 

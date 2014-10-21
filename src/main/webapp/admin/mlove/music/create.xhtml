@@ -15,6 +15,15 @@
                 <p:outputLabel for="content" value="Content"/>
                 <p:inputTextarea id="content" rows="6" cols="50" value="#{musicController.current.content}"/>
 
+                <p:outputLabel for="file" value="File"/>
+                <p:outputLabel id="file" value="#{musicController.current.musicFile == null ? '' : musicController.current.musicFile.filePath}" />
+
+                <p:outputLabel value=""/>
+                <p:commandButton value="Get File" icon="ui-icon-document" 
+                                 actionListener="#{fileController.resetEntityToImage()}"
+                                 update=":dlgUpload"
+                                 oncomplete="PF('dlgUpload').show();">
+                </p:commandButton>
                 <p:outputLabel for="value" value="Price"/>
                 <p:inputText id="value" size="20" value="#{musicController.current.price}">
                     <f:convertNumber type="number"/>
@@ -25,12 +34,12 @@
 
                 <p:outputLabel for="promotion" value="Promotion"/>
                 <p:selectBooleanCheckbox id="promotion" value="#{musicController.current.promotion}"/>
-                
+
                 <p:outputLabel for="promoPrice" value="Promotion Price"/>
                 <p:inputText id="promoPrice" size="20" value="#{musicController.current.promoPrice}">
                     <f:convertNumber type="number"/>
                 </p:inputText>
-                
+
                 <p:commandButton value="Create" icon="ui-icon-document" 
                                  actionListener="#{musicController.persist()}"
                                  update="fmCreate :fmList"

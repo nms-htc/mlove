@@ -6,11 +6,12 @@
                 template="/admin/template/template.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="title">Post</ui:define>
+    <ui:define name="title">Music</ui:define>
 
     <ui:define name="dialogs">
         <ui:include src="create.xhtml"/>
         <ui:include src="edit.xhtml"/>
+        <ui:include src="../file/upload.xhtml"/>
     </ui:define>
 
     <ui:define name="content">
@@ -75,13 +76,13 @@
                 <p:column style="width: 90px">
                     <p:menuButton value="Action">
                         <p:menuitem value="Edit"
-                                    actionListener="#{musicController.prepareEntity(post)}"
+                                    actionListener="#{musicController.prepareEntity(music)}"
                                     update=":dlgEdit"
                                     icon="ui-icon-pencils"
                                     oncomplete="PF('dlgEdit').show();"/>
 
                         <p:menuitem value="Delete"
-                                    actionListener="#{musicController.remove(post)}"
+                                    actionListener="#{musicController.remove(music)}"
                                     icon="ui-icon-close"
                                     update="@form :growl">
                         </p:menuitem>
