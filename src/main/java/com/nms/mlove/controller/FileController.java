@@ -12,6 +12,7 @@ import com.nms.mlove.util.AppConfig;
 import com.nms.mlove.util.MessageUtil;
 import java.io.IOException;
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,12 +39,15 @@ public class FileController extends AbstractController<File>
     {
         return service;
     }
+    
+    public void uploadOnchange() {
+        current.setUpload(!current.isUpload());
+    }
 
-    public void resetEntity(String type)
+    public void prepareEntity(File entity, String type)
     {
-        super.resetEntity();
+        super.prepareEntity(entity);
         File.FileType fileType = File.FileType.MUSIC;
-        
         switch (type)
         {
             case "THUMB_IMAGE":
@@ -65,7 +69,37 @@ public class FileController extends AbstractController<File>
                 fileType = File.FileType.VIDEO;
                 break;
         }
-        
+
+        getCurrent().setFileType(fileType);
+    }
+
+    public void resetEntity(String type)
+    {
+        super.resetEntity();
+        File.FileType fileType = File.FileType.MUSIC;
+
+        switch (type)
+        {
+            case "THUMB_IMAGE":
+                fileType = File.FileType.THUMB_IMAGE;
+                break;
+            case "THUMB_MUSIC":
+                fileType = File.FileType.THUMB_MUSIC;
+                break;
+            case "THUMB_VIDEO":
+                fileType = File.FileType.THUMB_VIDEO;
+                break;
+            case "IMAGE":
+                fileType = File.FileType.IMAGE;
+                break;
+            case "MUSIC":
+                fileType = File.FileType.MUSIC;
+                break;
+            case "VIDEO":
+                fileType = File.FileType.VIDEO;
+                break;
+        }
+
         getCurrent().setFileType(fileType);
     }
 
@@ -119,6 +153,32 @@ public class FileController extends AbstractController<File>
         return Long.parseLong(limitSize);
     }
 
+    public void handleReplaceFile(FileUploadEvent event)
+    {
+        try
+        {
+            current.setIs(event.getFile().getInputstream());
+            current.setFileSize(event.getFile().getSize());
+            current.setContentType(event.getFile().getContentType());
+            //current.setFilePath(event.getFile().getFileName());
+            current.setUpload(true);
+            
+            String filePath = service.getFileStoreLocation(current);
+            
+            filePath = filePath + java.io.File.separator + current.getId().
+                    toString();
+            service.validateDirectories(filePath);
+            filePath = filePath + java.io.File.separator + event.getFile().getFileName();
+
+            service.storeFile(current.getIs(), filePath);
+            current.setFilePath(filePath);
+        }
+        catch (IOException ex)
+        {
+            MessageUtil.addGlobalErrorMessage(ex);
+        }
+    }
+
     public void handleFileUpload(FileUploadEvent event)
     {
         try
@@ -138,26 +198,33 @@ public class FileController extends AbstractController<File>
     @Override
     protected void onAfterPersist()
     {
-        super.onAfterPersist();
         try
         {
-
-            if (getCurrent().getFileType() == File.FileType.MUSIC)
+            updateToUpperController();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            MessageUtil.addGlobalErrorMessage(e);
+        }
+        finally
+        {
+            super.onAfterPersist();
+        }
+    }
+    
+    private void updateToUpperController() throws CloneNotSupportedException
+    {
+        if (getCurrent().getFileType() == File.FileType.MUSIC)
             {
                 musicController.getCurrent().
                         setMusicFile((File) current.clone());
             }
             else if (getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
             {
-                
+
                 musicController.getCurrent().
                         setThumbFile((File) current.clone());
             }
-        }
-        catch (CloneNotSupportedException e)
-        {
-            MessageUtil.addGlobalErrorMessage(e);
-        }
     }
 
 }

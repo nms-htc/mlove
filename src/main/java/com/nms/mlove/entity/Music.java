@@ -25,11 +25,11 @@ public class Music extends Product {
     @JoinColumn(name = "CAT_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     protected MusicCat cat;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "THUMBNAIL_FILEID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     protected File thumbFile;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "MAIN_FILEID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     protected File musicFile;
 

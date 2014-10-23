@@ -11,6 +11,7 @@ import com.nms.mlove.util.AppConfig;
 import com.nms.mlove.util.MessageUtil;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import javax.ejb.Stateless;
 
@@ -23,94 +24,114 @@ public class FileServiceBean extends AbstractService<File> implements
         FileService
 {
     private static final long serialVersionUID = 4912271302978902126L;
-
+    
     public FileServiceBean()
     {
         super(File.class);
     }
-
+    
     @Override
     protected void onAfterPersist(File entity)
     {
         super.onAfterPersist(entity);
+        
         Long id = entity.getId();
-        if (id != null)
+        if (id != null && entity.isUpload())
         {
             String filename = entity.getFilePath();
-            String directory = getFileStoreLocation(entity)
-                    + java.io.File.pathSeparator + id.toString()
-                    + java.io.File.pathSeparator;
-
-            entity.setFilePath(directory + filename);
-
-            java.io.File file = new java.io.File(directory);
-            if (!file.exists())
-            {
-                file.mkdirs();
-            }
-
-            file = new java.io.File(entity.getFilePath());
-
-            OutputStream outputStream = null;
-
-            try
-            {
-                file.createNewFile();
-
-                outputStream
-                = new FileOutputStream(file);
-
-                int read = 0;
-                byte[] bytes = new byte[1024];
-
-                while ((read = entity.getIs().read(bytes)) != -1)
-                {
-                    outputStream.write(bytes, 0, read);
-                }
-
-            }
-            catch (IOException e)
-            {
-                MessageUtil.addGlobalErrorMessage(e);
-            }
-            finally
-            {
-                if (outputStream != null)
-                {
-                    try
-                    {
-                        outputStream.close();
-                    }
-                    catch (IOException ex)
-                    {
-                    }
-                }
-            }
-            em.merge(entity);
+            String directory = getFileStoreLocation(entity);
+            
+            validateDirectories(directory + java.io.File.separator + id.
+                    toString());
+            
+            entity.setFilePath(directory + java.io.File.separator + id.
+                    toString() + java.io.File.separator + filename);
+            storeFile(entity.getIs(), entity.getFilePath());
+        }
+        
+        em.merge(entity);
+        
+    }
+    
+    @Override
+    public void validateDirectories(String path)
+    {
+        java.io.File file = new java.io.File(path);
+        if (!file.exists())
+        {
+            file.mkdirs();
         }
     }
-
+    
+    @Override
+    public void storeFile(InputStream iStream, String filePath)
+    {
+        java.io.File file = new java.io.File(filePath);
+        
+        OutputStream outputStream = null;
+        
+        try
+        {
+            if (file.exists())
+            {
+                file.delete();
+            }
+            
+            file.createNewFile();
+            
+            outputStream
+            = new FileOutputStream(file);
+            
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            
+            while ((read = iStream.read(bytes)) != -1)
+            {
+                outputStream.write(bytes, 0, read);
+            }
+            
+        }
+        catch (IOException e)
+        {
+            MessageUtil.addGlobalErrorMessage(e);
+        }
+        finally
+        {
+            if (outputStream != null)
+            {
+                try
+                {
+                    outputStream.close();
+                }
+                catch (IOException ex)
+                {
+                }
+            }
+        }
+        
+    }
+    
+    @Override
     public String getFileStoreLocation(File entity)
     {
-        String unknow = "/admin/upload/other";
+        String dir = "/admin/upload/other";
         if (entity.getFileType() == File.FileType.IMAGE
                 || entity.getFileType() == File.FileType.THUMB_IMAGE)
         {
-            return AppConfig.props.getProperty("imageFileLcation", unknow);
+            dir = AppConfig.props.getProperty("imageFileLocation", dir);
         }
         else if (entity.getFileType() == File.FileType.MUSIC
                 || entity.getFileType() == File.FileType.THUMB_MUSIC)
         {
-            return AppConfig.props.getProperty("musicFileLcation", unknow);
+            dir = AppConfig.props.getProperty("musicFileLocation", dir);
         }
         else if (entity.getFileType() == File.FileType.VIDEO
                 || entity.getFileType() == File.FileType.THUMB_VIDEO)
         {
-            return AppConfig.props.getProperty("videoFileLcation", unknow);
+            dir = AppConfig.props.getProperty("videoFileLocation", dir);
         }
-        else
-        {
-            return unknow;
-        }
+        validateDirectories(dir);
+        
+        return dir;
     }
 }

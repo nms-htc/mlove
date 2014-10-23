@@ -6,8 +6,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <p:dialog id="dlgUpload" header="Upload File" modal="true" widgetVar="dlgUpload">
-        <h:form id="frmUpload">
+    <p:dialog id="dlgEditFile" header="Edit uploaded File" modal="true" widgetVar="dlgEditFile">
+        <h:form id="frmEditFile">
             <h:panelGrid columns="2" width="100%" >
                 <p:outputLabel for="title" value="Title"/>
                 <p:inputText id="title" size="35" value="#{fileController.current.title}"/>
@@ -20,19 +20,19 @@
                     <p:ajax update="@form"/>
                 </p:selectBooleanCheckbox>
 
-                <p:outputLabel for="title" value="Browse" rendered="#{fileController.current.upload}"/>
-                <p:fileUpload fileUploadListener="#{fileController.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                <p:outputLabel for="title" value="Replace currentFile" rendered="#{fileController.current.upload}"/>
+                <p:fileUpload fileUploadListener="#{fileController.handleReplaceFile}" mode="advanced" dragDropSupport="false"
                               update="@form :growl" sizeLimit="#{fileController.fileLimit == 0 ? 9999999999 : fileController.fileLimit}" 
-                              fileLimit="1" allowTypes="/(\\.|\\/)(#{fileController.fileType})$/"
+                              fileLimit="1" allowTypes="/(\\.|\\/)(#{fileController.fileType})$/" 
                               rendered="#{fileController.current.upload}"/>
 
                 <p:outputLabel for="content" value="Content"/>
                 <p:inputTextarea id="content" rows="6" cols="50" value="#{fileController.current.description}"/>
 
-                <p:commandButton value="Create" icon="ui-icon-document" 
-                                 actionListener="#{fileController.persist()}"
-                                 update=":fmCreate"
-                                 oncomplete="submitHandle(xhr, status, args, 'dlgUpload');"
+                <p:commandButton value="Save" icon="ui-icon-document" 
+                                 actionListener="#{fileController.update()}"
+                                 update=":fmEdit"
+                                 oncomplete="submitHandle(xhr, status, args, 'dlgEditFile');"
                                  />
             </h:panelGrid>
         </h:form>

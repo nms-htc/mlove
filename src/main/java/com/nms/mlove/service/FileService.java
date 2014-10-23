@@ -7,6 +7,7 @@
 package com.nms.mlove.service;
 
 import com.nms.mlove.entity.File;
+import java.io.InputStream;
 
 /**
  *
@@ -14,5 +15,9 @@ import com.nms.mlove.entity.File;
  */
 public interface FileService extends BaseService<File>
 {
+    public String getFileStoreLocation(File file);
     
+    public void validateDirectories(String path);
+    
+    public void storeFile(InputStream isStream, String filePath);
 }

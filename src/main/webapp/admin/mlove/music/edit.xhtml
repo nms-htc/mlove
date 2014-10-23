@@ -18,22 +18,22 @@
                 <p:outputLabel id="thumbFile" value="#{musicController.current.thumbFile == null ? '' : musicController.current.thumbFile.filePath}" />
 
                 <p:outputLabel value=""/>
-                <p:commandButton value="Get File" icon="ui-icon-document" 
-                                 actionListener="#{fileController.setCurrent(musicController.current.thumbFile)}"
-                                 update=":dlgUpload"
-                                 oncomplete="PF('dlgUpload').show();">
-                    <p:resetInput target=":dlgUpload"/>
+                <p:commandButton value="Change" icon="ui-icon-document" 
+                                 actionListener="#{fileController.prepareEntity(musicController.current.thumbFile, 'THUMB_MUSIC')}"
+                                 update=":dlgEditFile"
+                                 oncomplete="PF('dlgEditFile').show();">
+                    <p:resetInput target=":dlgEditFile"/>
                 </p:commandButton>
 
                 <p:outputLabel for="file" value="File"/>
                 <p:outputLabel id="file" value="#{musicController.current.musicFile == null ? '' : musicController.current.musicFile.filePath}" />
 
                 <p:outputLabel value=""/>
-                <p:commandButton value="Get File" icon="ui-icon-document" 
-                                 actionListener="#{fileController.setCurrent(musicController.current.musicFile)}"
-                                 update=":dlgUpload"
-                                 oncomplete="PF('dlgUpload').show();">
-                    <p:resetInput target=":dlgUpload"/>
+                <p:commandButton value="Change" icon="ui-icon-document" 
+                                 actionListener="#{fileController.prepareEntity(musicController.current.musicFile, 'MUSIC')}"
+                                 update=":dlgEditFile"
+                                 oncomplete="PF('dlgEditFile').show();">
+                    <p:resetInput target=":dlgEditFile"/>
                 </p:commandButton>
 
                 <p:outputLabel for="value" value="Price"/>
