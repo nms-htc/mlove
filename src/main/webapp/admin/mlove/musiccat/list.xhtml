@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/admin/template/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="title">Music Category</ui:define>
+
+    <ui:define name="dialogs">
+        <ui:include src="create.xhtml"/>
+        <ui:include src="edit.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="fmList">
+            <p:messages/>
+            <p:panel id="searchFormPanel" header="Search">
+                <h:panelGrid columns="4" width="100%">
+
+                    <p:outputLabel for="title" value="Title"/>
+                    <p:inputText id="title"/>
+
+                    <p:outputLabel for="createDate" value="Ngày tạo"/>
+                    <p:calendar id="createDate" value="#{musicCatController.current.createdDate}"
+                                showOn="button" pattern="dd/MM/yyyy"/>
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Add"
+                                     icon="ui-icon-document"
+                                     actionListener="#{musicCatController.resetEntity()}"
+                                     update=":dlgCreate"
+                                     oncomplete="PF('dlgCreate').show();">
+                        <p:resetInput target=":dlgCreate"/>
+                    </p:commandButton>
+                    <p:commandButton value="Search" icon="ui-icon-search"/>
+                </f:facet>
+            </p:panel>
+            <br/>
+            <p:dataTable id="tbList"
+                         widgetVar="tbList"
+                         rowIndexVar="index"
+                         var="musicCat"
+                         value="#{musicCatController.model}"
+                         lazy="true"
+                         paginator="true"
+                         rows="15"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="15,30,45"
+                         resizableColumns="true">
+
+                <p:column headerText="STT" width="20" toggleable="false">
+                    <h:outputText value="#{index + 1}"/>
+                </p:column>
+
+                <p:column headerText="Title"
+                          sortBy="#{musicCat.title}">
+                    <h:outputText value="#{musicCat.title}"/>
+                </p:column>
+
+                <p:column headerText="Description"
+                          sortBy="#{musicCat.description}">
+                    <h:outputText value="#{musicCat.description}"/>
+                </p:column>
+
+                <p:column style="width: 90px">
+                    <p:menuButton value="Action">
+                        <p:menuitem value="Edit"
+                                    actionListener="#{musicCatController.prepareEntity(musicCat)}"
+                                    update=":dlgEdit"
+                                    icon="ui-icon-pencils"
+                                    oncomplete="PF('dlgEdit').show();"/>
+
+                        <p:menuitem value="Delete"
+                                    actionListener="#{musicCatController.remove(musicCat)}"
+                                    icon="ui-icon-close"
+                                    update="@form :growl">
+                        </p:menuitem>
+                    </p:menuButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

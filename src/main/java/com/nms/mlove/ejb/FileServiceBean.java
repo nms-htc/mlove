@@ -93,15 +93,18 @@ public class FileServiceBean extends AbstractService<File> implements
     public String getFileStoreLocation(File entity)
     {
         String unknow = "/admin/upload/other";
-        if (entity.getFileType() == File.FileType.IMAGE)
+        if (entity.getFileType() == File.FileType.IMAGE
+                || entity.getFileType() == File.FileType.THUMB_IMAGE)
         {
             return AppConfig.props.getProperty("imageFileLcation", unknow);
         }
-        else if (entity.getFileType() == File.FileType.MUSIC)
+        else if (entity.getFileType() == File.FileType.MUSIC
+                || entity.getFileType() == File.FileType.THUMB_MUSIC)
         {
             return AppConfig.props.getProperty("musicFileLcation", unknow);
         }
-        else if (entity.getFileType() == File.FileType.VIDEO)
+        else if (entity.getFileType() == File.FileType.VIDEO
+                || entity.getFileType() == File.FileType.THUMB_VIDEO)
         {
             return AppConfig.props.getProperty("videoFileLcation", unknow);
         }

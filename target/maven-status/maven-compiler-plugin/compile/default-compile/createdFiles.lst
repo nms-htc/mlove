@@ -1,3 +1,4 @@
+com\nms\mlove\controller\convertor\MusicCatConvertor.class
 com\nms\mlove\ejb\AbstractService$1.class
 com\nms\mlove\service\PostService.class
 com\nms\mlove\ejb\ProductServiceBean.class
@@ -5,6 +6,7 @@ com\nms\mlove\util\JsfUtil.class
 com\nms\mlove\entity\Music_.class
 com\nms\mlove\service\ProductService.class
 com\nms\mlove\entity\File_.class
+com\nms\mlove\ejb\MusicCatServiceBean.class
 com\nms\mlove\entity\Video_.class
 com\nms\mlove\controller\AbstractController$1.class
 com\nms\mlove\entity\User$Group.class
@@ -18,16 +20,18 @@ com\nms\mlove\entity\Video.class
 com\nms\mlove\service\FileService.class
 com\nms\mlove\entity\VideoCat.class
 com\nms\mlove\entity\LinkDownload.class
-com\nms\mlove\ejb\PostServiceBean.class
 com\nms\mlove\service\MusicService.class
+com\nms\mlove\ejb\PostServiceBean.class
 com\nms\mlove\ejb\AbstractService.class
 com\nms\mlove\entity\Post.class
 com\nms\mlove\entity\PostCat.class
 com\nms\mlove\entity\Music.class
 com\nms\mlove\entity\BaseEntity_.class
 com\nms\mlove\servlet\FileServlet.class
+com\nms\mlove\service\MusicCatService.class
 com\nms\mlove\entity\Cat.class
 com\nms\mlove\entity\File.class
+com\nms\mlove\controller\convertor\AbstractEntityConvertor.class
 com\nms\mlove\entity\VideoCat_.class
 com\nms\mlove\entity\MusicCat_.class
 com\nms\mlove\util\MessageUtil.class
@@ -47,6 +51,7 @@ com\nms\mlove\ejb\FileServiceBean.class
 com\nms\mlove\controller\MusicController.class
 com\nms\mlove\controller\AbstractController.class
 com\nms\mlove\entity\User.class
+com\nms\mlove\controller\MusicCatController.class
 com\nms\mlove\controller\FileController.class
 com\nms\mlove\entity\BaseEntity.class
 com\nms\mlove\util\Validator.class

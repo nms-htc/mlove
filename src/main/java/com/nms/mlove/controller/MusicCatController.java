@@ -5,9 +5,9 @@
  */
 package com.nms.mlove.controller;
 
-import com.nms.mlove.entity.Music;
+import com.nms.mlove.entity.MusicCat;
 import com.nms.mlove.service.BaseService;
-import com.nms.mlove.service.MusicService;
+import com.nms.mlove.service.MusicCatService;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -18,16 +18,17 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class MusicController extends AbstractController<Music>
+public class MusicCatController extends AbstractController<MusicCat>
 {
-    private static final long serialVersionUID = -7014295320270299177L;
+    private static final long serialVersionUID = 8676842171949443893L;
 
     @EJB
-    private MusicService service;
-    
+    private MusicCatService service;
+
     @Override
-    protected BaseService<Music> getBaseService()
+    protected BaseService<MusicCat> getBaseService()
     {
         return service;
     }
+
 }

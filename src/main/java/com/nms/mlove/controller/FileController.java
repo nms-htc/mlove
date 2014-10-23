@@ -13,6 +13,7 @@ import com.nms.mlove.util.MessageUtil;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 
@@ -29,42 +30,60 @@ public class FileController extends AbstractController<File>
     @EJB
     private FileService service;
 
+    @Inject
+    private MusicController musicController;
+
     @Override
     protected BaseService<File> getBaseService()
     {
         return service;
     }
 
-    public void resetEntityToImage()
+    public void resetEntity(String type)
     {
-        resetEntity();
-        getCurrent().setFileType(File.FileType.IMAGE);
-    }
-
-    public void resetEntityToMusic()
-    {
-        resetEntity();
-        getCurrent().setFileType(File.FileType.MUSIC);
-    }
-
-    public void resetEntityToVideo()
-    {
-        resetEntity();
-        getCurrent().setFileType(File.FileType.VIDEO);
+        super.resetEntity();
+        File.FileType fileType = File.FileType.MUSIC;
+        
+        switch (type)
+        {
+            case "THUMB_IMAGE":
+                fileType = File.FileType.THUMB_IMAGE;
+                break;
+            case "THUMB_MUSIC":
+                fileType = File.FileType.THUMB_MUSIC;
+                break;
+            case "THUMB_VIDEO":
+                fileType = File.FileType.THUMB_VIDEO;
+                break;
+            case "IMAGE":
+                fileType = File.FileType.IMAGE;
+                break;
+            case "MUSIC":
+                fileType = File.FileType.MUSIC;
+                break;
+            case "VIDEO":
+                fileType = File.FileType.VIDEO;
+                break;
+        }
+        
+        getCurrent().setFileType(fileType);
     }
 
     public String getFileType()
     {
         String allType = "*";
-        if (getCurrent().getFileType() == File.FileType.IMAGE)
+        if (getCurrent().getFileType() == File.FileType.IMAGE
+                || getCurrent().getFileType() == File.FileType.THUMB_IMAGE)
         {
             return AppConfig.props.getProperty("imageFileType", allType);
         }
-        else if (getCurrent().getFileType() == File.FileType.MUSIC)
+        else if (getCurrent().getFileType() == File.FileType.MUSIC
+                || getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
         {
             return AppConfig.props.getProperty("musicFileType", allType);
         }
-        else if (getCurrent().getFileType() == File.FileType.VIDEO)
+        else if (getCurrent().getFileType() == File.FileType.VIDEO
+                || getCurrent().getFileType() == File.FileType.THUMB_VIDEO)
         {
             return AppConfig.props.getProperty("videoFileType", allType);
         }
@@ -78,17 +97,20 @@ public class FileController extends AbstractController<File>
     {
         String unlimit = "0";
         String limitSize = unlimit;
-        if (getCurrent().getFileType() == File.FileType.IMAGE)
+        if (getCurrent().getFileType() == File.FileType.IMAGE
+                || getCurrent().getFileType() == File.FileType.THUMB_IMAGE)
         {
             limitSize = AppConfig.props.getProperty("imageFileSizeLimit",
                     unlimit);
         }
-        else if (getCurrent().getFileType() == File.FileType.MUSIC)
+        else if (getCurrent().getFileType() == File.FileType.MUSIC
+                || getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
         {
             limitSize = AppConfig.props.getProperty("musicFileSizeLimit",
                     unlimit);
         }
-        else if (getCurrent().getFileType() == File.FileType.VIDEO)
+        else if (getCurrent().getFileType() == File.FileType.VIDEO
+                || getCurrent().getFileType() == File.FileType.THUMB_VIDEO)
         {
             limitSize = AppConfig.props.getProperty("videoFileSizeLimit",
                     unlimit);
@@ -110,6 +132,31 @@ public class FileController extends AbstractController<File>
         catch (IOException ex)
         {
             MessageUtil.addGlobalErrorMessage(ex);
+        }
+    }
+
+    @Override
+    protected void onAfterPersist()
+    {
+        super.onAfterPersist();
+        try
+        {
+
+            if (getCurrent().getFileType() == File.FileType.MUSIC)
+            {
+                musicController.getCurrent().
+                        setMusicFile((File) current.clone());
+            }
+            else if (getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
+            {
+                
+                musicController.getCurrent().
+                        setThumbFile((File) current.clone());
+            }
+        }
+        catch (CloneNotSupportedException e)
+        {
+            MessageUtil.addGlobalErrorMessage(e);
         }
     }
 

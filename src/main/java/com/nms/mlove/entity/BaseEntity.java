@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  * @version 1.0
  */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 7096442574647885460L;
 
@@ -67,6 +67,19 @@ public abstract class BaseEntity implements Serializable {
     public void setModifiedDate(Date modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException
+    {
+        BaseEntity entity = (BaseEntity) super.clone();
+        
+        entity.createdDate = (Date) this.createdDate.clone();
+        entity.modifiedDate = (Date) this.modifiedDate.clone();
+        
+        return entity; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
     @Override
     public int hashCode() {
