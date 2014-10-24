@@ -17,7 +17,7 @@
 
                 <p:outputLabel for="upload" value="Check to Upload"/>
                 <p:selectBooleanCheckbox id="upload" value="#{fileController.current.upload}">
-                    <p:ajax update="@form"/>
+                    <p:ajax process="@form" update="@form"/>
                 </p:selectBooleanCheckbox>
 
                 <p:outputLabel  id="browseTitle" value="Replace currentFile" rendered="#{fileController.current.upload}"/>

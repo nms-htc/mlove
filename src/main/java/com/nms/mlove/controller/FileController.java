@@ -49,6 +49,8 @@ public class FileController extends AbstractController<File>
 
     public void prepareEntity(File entity, String type)
     {
+        if (entity == null)
+            entity = new File();
         super.prepareEntity(entity);
         File.FileType fileType = File.FileType.UNKNOW;
         switch (type)
@@ -215,6 +217,24 @@ public class FileController extends AbstractController<File>
             super.onAfterPersist();
         }
     }
+
+    @Override
+    protected void onAfterUpdate()
+    {
+        try
+        {
+            updateToUpperController();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            MessageUtil.addGlobalErrorMessage(e);
+        }
+        finally
+        {
+            super.onAfterPersist();
+        }
+    }
+    
 
     private void updateToUpperController() throws CloneNotSupportedException
     {

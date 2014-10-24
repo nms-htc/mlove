@@ -19,7 +19,8 @@ import javax.persistence.TemporalType;
  * @version 1.0
  */
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable, Cloneable {
+public abstract class BaseEntity implements Serializable, Cloneable
+{
 
     private static final long serialVersionUID = 7096442574647885460L;
 
@@ -36,35 +37,43 @@ public abstract class BaseEntity implements Serializable, Cloneable {
     @Temporal(TemporalType.TIMESTAMP)
     protected Date modifiedDate;
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description)
+    {
         this.description = description;
     }
 
-    public Date getCreatedDate() {
+    public Date getCreatedDate()
+    {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Date createdDate)
+    {
         this.createdDate = createdDate;
     }
 
-    public Date getModifiedDate() {
+    public Date getModifiedDate()
+    {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
+    public void setModifiedDate(Date modifiedDate)
+    {
         this.modifiedDate = modifiedDate;
     }
 
@@ -72,46 +81,57 @@ public abstract class BaseEntity implements Serializable, Cloneable {
     protected Object clone() throws CloneNotSupportedException
     {
         BaseEntity entity = (BaseEntity) super.clone();
-        
-        entity.createdDate = (Date) this.createdDate.clone();
-        entity.modifiedDate = (Date) this.modifiedDate.clone();
-        
+
+        if (this.createdDate != null)
+        {
+            entity.createdDate = (Date) this.createdDate.clone();
+        }
+        if (this.modifiedDate != null)
+        {
+            entity.modifiedDate = (Date) this.modifiedDate.clone();
+        }
+
         return entity;
     }
-    
-    
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 7;
         hash = 83 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
+        {
             return false;
         }
         final BaseEntity other = (BaseEntity) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (!Objects.equals(this.id, other.id))
+        {
             return false;
         }
         return true;
     }
 
     @PrePersist
-    protected void onPrePersist() {
+    protected void onPrePersist()
+    {
         Date now = new Date();
         createdDate = now;
         modifiedDate = now;
     }
 
     @PreUpdate
-    protected void onPreUpdate() {
+    protected void onPreUpdate()
+    {
         modifiedDate = new Date();
     }
 }
