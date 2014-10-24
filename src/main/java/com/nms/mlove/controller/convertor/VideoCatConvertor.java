@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.nms.mlove.controller.convertor;
 
-import com.nms.mlove.entity.MusicCat;
+import com.nms.mlove.entity.VideoCat;
 import com.nms.mlove.service.BaseService;
-import com.nms.mlove.service.MusicCatService;
+import com.nms.mlove.service.VideoCatService;
 import javax.ejb.EJB;
 import javax.faces.convert.FacesConverter;
 
@@ -15,23 +16,21 @@ import javax.faces.convert.FacesConverter;
  *
  * @author NamTA
  */
-@FacesConverter("musicCatConvertor")
-public class MusicCatConvertor extends AbstractEntityConvertor<MusicCat>
+@FacesConverter("videoCatConvertor")
+public class VideoCatConvertor extends AbstractEntityConvertor<VideoCat>
 {
-
-    @EJB 
-    private MusicCatService catService;
-
+    @EJB
+    private VideoCatService service;
+            
     @Override
-    protected BaseService<MusicCat> getBaseService()
+    protected BaseService<VideoCat> getBaseService()
     {
-        return catService;
+        return service;
     }
 
     @Override
-    protected Class<MusicCat> getEntityClass()
+    protected Class<VideoCat> getEntityClass()
     {
-        return MusicCat.class;
+        return VideoCat.class;
     }
-
 }

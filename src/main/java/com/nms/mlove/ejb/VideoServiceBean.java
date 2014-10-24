@@ -7,6 +7,7 @@
 package com.nms.mlove.ejb;
 
 import com.nms.mlove.entity.Video;
+import com.nms.mlove.service.VideoService;
 import javax.ejb.Stateless;
 
 /**
@@ -14,7 +15,7 @@ import javax.ejb.Stateless;
  * @author NamTA
  */
 @Stateless
-public class VideoServiceBean extends ProductServiceBean<Video>
+public class VideoServiceBean extends ProductServiceBean<Video> implements VideoService
 {
     private static final long serialVersionUID = -2224958569242409588L;
 
