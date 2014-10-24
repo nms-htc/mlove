@@ -29,5 +29,5 @@ public interface BaseService<T extends BaseEntity> extends Serializable {
 
     public List<T> searchForPFDatatable(T criteria, int start, int range, String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
-    public int countForPFDatatable(Map<String, Object> filters);
+    public int countForPFDatatable(T criteria, Map<String, Object> filters);
 }

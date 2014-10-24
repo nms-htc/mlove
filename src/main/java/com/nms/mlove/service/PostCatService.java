@@ -5,9 +5,7 @@
  */
 package com.nms.mlove.service;
 
-import com.nms.mlove.entity.Post;
 import com.nms.mlove.entity.PostCat;
-import java.util.List;
 
 /**
  *
@@ -15,5 +13,4 @@ import java.util.List;
  */
 public interface PostCatService extends CatService<PostCat>{
     
-    public List<Post> findItemUsingCat(long id);
 }

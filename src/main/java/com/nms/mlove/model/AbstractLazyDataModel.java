@@ -22,14 +22,13 @@ public abstract class AbstractLazyDataModel<T extends BaseEntity> extends LazyDa
     private static final long serialVersionUID = -6241362556725345679L;
     
     protected abstract BaseService<T> getService();
-    
+
     private T criteria;
-    
+            
     public AbstractLazyDataModel(T criteria) {
         this.criteria = criteria;
-        
     }
-
+    
     protected long parserRowKey(String rowKey) {
         return Long.parseLong(rowKey);
     }
@@ -46,7 +45,7 @@ public abstract class AbstractLazyDataModel<T extends BaseEntity> extends LazyDa
 
     @Override
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        this.setRowCount(getService().countForPFDatatable(filters));
+        this.setRowCount(getService().countForPFDatatable(criteria, filters));
         return getService().searchForPFDatatable(criteria, first, first, sortField, sortOrder, filters);
     }
 

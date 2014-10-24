@@ -9,6 +9,7 @@ import com.nms.mlove.entity.BaseEntity_;
 import com.nms.mlove.entity.Post;
 import com.nms.mlove.entity.PostCat;
 import com.nms.mlove.entity.Post_;
+import com.nms.mlove.entity.Product_;
 import com.nms.mlove.service.PostCatService;
 import java.util.List;
 import javax.ejb.EJBException;
@@ -34,32 +35,20 @@ public class PostCatServiceBean extends CatServiceBean<PostCat> implements PostC
         super(PostCat.class);
     }
 
-    @Override
-    public List<Post> findItemUsingCat(long id) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Post> cq = cb.createQuery(Post.class);
-        Root<Post> root = cq.from(Post.class);
-        Join<Post, PostCat> cat = root.join(Post_.cat, JoinType.LEFT);
-        cq.select(root);
-        cq.where(cb.equal(cat.get(BaseEntity_.id), id));
-        TypedQuery<Post> q = em.createQuery(cq);
-        return q.getResultList();
-    }
-
-    @Override
-    protected void onBeforeRemove(PostCat entity) {
-        super.onBeforeRemove(entity);
-        
-        List<Post> listItem = null;
-        try {
-            listItem = findItemUsingCat(entity.getId());
-
-            if (listItem != null && !listItem.isEmpty()) {
-                throw new EJBException("category-in-used");
-            }
-        } catch (NoResultException e) {
-            // OK
-        }
-    }
+//    @Override
+//    protected void onBeforeRemove(PostCat entity) {
+//        super.onBeforeRemove(entity);
+//        
+//        List<Post> listItem = null;
+//        try {
+//            listItem = findItemUsingCat(entity.getId());
+//
+//            if (listItem != null && !listItem.isEmpty()) {
+//                throw new EJBException("category-in-used");
+//            }
+//        } catch (NoResultException e) {
+//            // OK
+//        }
+//    }
 
 }

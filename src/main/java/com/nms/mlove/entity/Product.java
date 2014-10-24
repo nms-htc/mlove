@@ -2,10 +2,14 @@ package com.nms.mlove.entity;
 
 import com.nms.mlove.util.StringUtil;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -16,6 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Nguyen Trong Cuong
+ * @param <T>
  * @since 09/10/2014
  * @version 1.0
  */
@@ -60,6 +65,10 @@ public abstract class Product extends BaseEntity {
     @Min(0)
     @Column(name = "PROMO_PRICE")
     private double promoPrice;
+    
+    @ManyToOne
+    @JoinColumn(name = "CAT_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Cat cat;
 
     public String getTitle() {
         return title;
@@ -123,6 +132,14 @@ public abstract class Product extends BaseEntity {
 
     public double getPromoPrice() {
         return promoPrice;
+    }
+    
+    public Cat getCat() {
+        return cat;
+    }
+
+    public void setCat(Cat cat) {
+        this.cat = cat;
     }
 
     @Override

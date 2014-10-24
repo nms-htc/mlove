@@ -20,10 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Video extends Product {
 
     private static final long serialVersionUID = 3192890565957976525L;
-    
-    @ManyToOne
-    @JoinColumn(name = "CAT_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    protected VideoCat cat;
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "THUMBNAIL_FILEID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -52,11 +48,8 @@ public class Video extends Product {
         this.videoFile = videoFile;
     }
 
+    @Override
     public VideoCat getCat() {
-        return cat;
-    }
-
-    public void setCat(VideoCat cat) {
-        this.cat = cat;
+        return (VideoCat) super.getCat();
     }
 }

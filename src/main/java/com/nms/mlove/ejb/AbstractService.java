@@ -2,7 +2,6 @@ package com.nms.mlove.ejb;
 
 import com.nms.mlove.entity.BaseEntity;
 import com.nms.mlove.entity.BaseEntity_;
-import com.nms.mlove.entity.Product_;
 import com.nms.mlove.service.BaseService;
 import com.nms.mlove.util.Validator;
 import java.util.ArrayList;
@@ -109,13 +108,13 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public int countForPFDatatable(Map<String, Object> filters) {
+    public int countForPFDatatable(T criteria, Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<T> root = cq.from(entityClass);
         cq.select(cb.count(root));
 
-        List<Predicate> predicates = buildConditions(filters, root, cb);
+        List<Predicate> predicates = buildConditions(criteria, filters, root, cb);
 
         if (predicates != null && !predicates.isEmpty()) {
             cq.where(predicates.toArray(new Predicate[]{}));
@@ -156,13 +155,14 @@ public abstract class AbstractService<T extends BaseEntity> implements BaseServi
     protected List<Predicate> buildConditions(T criteria, Map<String, Object> filters, Root<T> root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
 
-        if (criteria.getCreatedDate() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(root.get(BaseEntity_.createdDate), criteria.getCreatedDate()));
+        if (criteria != null) {
+            if (criteria.getCreatedDate() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get(BaseEntity_.createdDate), criteria.getCreatedDate()));
+            }
         }
-
         return predicates;
     }
-    
+
     protected List<Predicate> buildConditions(Map<String, Object> filters, Root<T> root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
 

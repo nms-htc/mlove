@@ -6,6 +6,8 @@
 package com.nms.mlove.ejb;
 
 import com.nms.mlove.entity.BaseEntity_;
+import com.nms.mlove.entity.Cat;
+import com.nms.mlove.entity.Post;
 import com.nms.mlove.entity.Product;
 import com.nms.mlove.entity.Product_;
 import com.nms.mlove.service.ProductService;
@@ -17,6 +19,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -89,15 +93,32 @@ public abstract class ProductServiceBean<T extends Product> extends AbstractServ
     protected List<Predicate> buildConditions(T criteria, Map<String, Object> filters, Root<T> root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
 
-        if (criteria.getCreatedDate() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(root.get(Product_.createdDate), criteria.getCreatedDate()));
-        }
+        if (criteria != null) {
+            if (criteria.getCreatedDate() != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get(Product_.createdDate), criteria.getCreatedDate()));
+            }
 
-        if (criteria.getTitle() != null && !criteria.getTitle().trim().isEmpty()) {
-            predicates.add(cb.like(cb.upper(root.get(Product_.title)), "%" + criteria.getTitle().trim() + "%"));
+            if (criteria.getTitle() != null && !criteria.getTitle().trim().isEmpty()) {
+                predicates.add(cb.like(cb.upper(root.get(Product_.title)), "%" + criteria.getTitle().trim() + "%"));
+            }
+            
+            if (criteria.getCat() != null) {
+                predicates.add(cb.equal(root.get(Product_.cat),criteria.getCat()));
+            }
         }
-
         return predicates;
     }
 
+    @Override
+    public List<T> findByCat(Cat cat) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(entityClass);
+        Root<T> root = cq.from(entityClass);
+        cq.select(root);
+        cq.where(root.get(Product_.cat).in(cat));
+        TypedQuery<T> q = em.createQuery(cq);
+        return q.getResultList();
+    }
+
+    
 }

@@ -19,20 +19,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Post extends Product {
 
     private static final long serialVersionUID = -505727239557431794L;
-    
-    @ManyToOne
-    @JoinColumn(name = "CAT_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    protected PostCat cat;
 
     public Post() {
     }
 
+    @Override
     public PostCat getCat() {
-        return cat;
+        return (PostCat) super.getCat();
     }
-
-    public void setCat(PostCat cat) {
-        this.cat = cat;
-    }
-    
 }

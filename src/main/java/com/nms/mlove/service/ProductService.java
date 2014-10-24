@@ -5,7 +5,9 @@
  */
 package com.nms.mlove.service;
 
+import com.nms.mlove.entity.Cat;
 import com.nms.mlove.entity.Product;
+import java.util.List;
 
 /**
  *
@@ -15,4 +17,6 @@ import com.nms.mlove.entity.Product;
 public interface ProductService<T extends Product> extends BaseService<T> {
 
     public T findByTitle(String title);
+    
+    public List<T> findByCat(Cat cat);
 }

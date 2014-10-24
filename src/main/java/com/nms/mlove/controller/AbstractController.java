@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import org.primefaces.model.LazyDataModel;
 
@@ -28,6 +27,7 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
     private static final long serialVersionUID = -1374442757454130534L;
 
     protected T current;
+    private T itemSearch = initEntity();
     protected LazyDataModel<T> model;
     protected SelectItem[] selectItems;
 
@@ -37,12 +37,12 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
     public void resetEntity() {
         current = null;
     }
-    
-    public void search(ActionEvent e) {
+
+    public void searchItem() {
         resetModel();
     }
-    
-    private void resetModel() { 
+
+    private void resetModel() {
         model = null;
     }
 
@@ -207,7 +207,7 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
      * @return new instance of LazyDataModel for the entity.
      */
     protected LazyDataModel<T> initDataModel() {
-        return new AbstractLazyDataModel<T>(current) {
+        return new AbstractLazyDataModel<T>(getItemSearch()) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -262,5 +262,17 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
 
     public void setSelectItems(SelectItem[] selectItems) {
         this.selectItems = selectItems;
+    }
+
+    public T getItemSearch() {
+        if (itemSearch == null) {
+            itemSearch = initEntity();
+        }
+        
+        return itemSearch;
+    }
+
+    public void setItemSearch(T itemSearch) {
+        this.itemSearch = itemSearch;
     }
 }

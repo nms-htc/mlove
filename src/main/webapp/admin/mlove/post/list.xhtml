@@ -15,15 +15,23 @@
 
     <ui:define name="content">
         <h:form id="fmList">
-            <p:messages globalOnly="true" closable="true"/>
+            <p:messages  globalOnly="true" closable="true"/>
             <p:panel id="searchFormPanel" header="Search">
-                <h:panelGrid columns="4" width="100%">
+                <h:panelGrid columns="8" width="100%">
+
+                    <p:outputLabel for="category" value="Category"/>
+                    <p:selectOneMenu id="category" 
+                                     value="#{postController.itemSearch.cat}" 
+                                     converter="postCatConvertor">
+                        <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
+                        <f:selectItems value="#{postCatController.selectItems}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel for="title" value="Title"/>
-                    <p:inputText id="title"/>
+                    <p:inputText id="title" value="#{postController.itemSearch.title}"/>
 
                     <p:outputLabel for="createDate" value="Ngày tạo"/>
-                    <p:calendar id="createDate" value="#{postController.current.createdDate}"
+                    <p:calendar id="createDate" value="#{postController.itemSearch.createdDate}"
                                 showOn="button" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
 
@@ -37,12 +45,11 @@
                     </p:commandButton>
                     <p:commandButton value="Search"
                                      icon="ui-icon-search"
-                                     actionListener="#{postController.search}" 
-                                     ajax="true"
+                                     actionListener="#{postController.searchItem()}"
                                      update="tbList"/>
                 </f:facet>
             </p:panel>
-            <br/>
+
             <p:dataTable id="tbList"
                          widgetVar="tbList"
                          rowIndexVar="index"
@@ -59,25 +66,30 @@
                     <h:outputText value="#{index + 1}"/>
                 </p:column>
 
+                <p:column headerText="Category"
+                          sortBy="#{post.cat.title}">
+                    <h:outputText value="#{post.cat.title}"/>
+                </p:column>
+
                 <p:column headerText="Title"
                           sortBy="#{post.title}">
                     <h:outputText value="#{post.title}"/>
                 </p:column>
-                
+
                 <p:column headerText="Price"
                           sortBy="#{post.price}">
                     <h:outputText value="#{post.price}">
                         <f:convertNumber type="number"/>
                     </h:outputText>
                 </p:column>
-                
+
                 <p:column headerText="Downloaded"
                           sortBy="#{post.downCount}">
                     <h:outputText value="#{post.downCount}">
                         <f:convertNumber type="number"/>
                     </h:outputText>
                 </p:column>
-                
+
                 <p:column headerText="Viewed"
                           sortBy="#{post.viewCount}">
                     <h:outputText value="#{post.viewCount}">
@@ -109,3 +121,4 @@
         </h:form>
     </ui:define>
 </ui:composition>
+
