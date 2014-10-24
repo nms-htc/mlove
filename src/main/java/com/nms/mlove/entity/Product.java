@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Nguyen Trong Cuong
- * @param <T>
  * @since 09/10/2014
  * @version 1.0
  */

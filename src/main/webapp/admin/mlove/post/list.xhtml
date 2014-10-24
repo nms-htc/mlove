@@ -15,7 +15,7 @@
 
     <ui:define name="content">
         <h:form id="fmList">
-            <p:messages  globalOnly="true" closable="true"/>
+            <p:messages globalOnly="true" closable="true"/>
             <p:panel id="searchFormPanel" header="Search">
                 <h:panelGrid columns="8" width="100%">
 
@@ -28,7 +28,9 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel for="title" value="Title"/>
-                    <p:inputText id="title" value="#{postController.itemSearch.title}"/>
+                    <p:inputText id="title" value="#{postController.itemSearch.title}">
+                        <f:validateBean disabled="true"/>
+                    </p:inputText>
 
                     <p:outputLabel for="createDate" value="Ngày tạo"/>
                     <p:calendar id="createDate" value="#{postController.itemSearch.createdDate}"
@@ -46,7 +48,7 @@
                     <p:commandButton value="Search"
                                      icon="ui-icon-search"
                                      actionListener="#{postController.searchItem()}"
-                                     update="tbList"/>
+                                     update="@form"/>
                 </f:facet>
             </p:panel>
 

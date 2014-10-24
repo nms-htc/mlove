@@ -20,7 +20,9 @@
                 <h:panelGrid columns="4" width="100%">
 
                     <p:outputLabel for="title" value="Title"/>
-                    <p:inputText id="title" value="#{postCatController.current.title}"/>
+                    <p:inputText id="title" value="#{postCatController.current.title}">
+                        <f:validateBean disabled="true"/>
+                    </p:inputText>
 
                     <p:outputLabel for="createDate" value="Ngày tạo"/>
                     <p:calendar id="createDate" value="#{postCatController.current.createdDate}"
