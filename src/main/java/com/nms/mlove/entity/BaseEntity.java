@@ -76,7 +76,7 @@ public abstract class BaseEntity implements Serializable, Cloneable {
         entity.createdDate = (Date) this.createdDate.clone();
         entity.modifiedDate = (Date) this.modifiedDate.clone();
         
-        return entity; //To change body of generated methods, choose Tools | Templates.
+        return entity;
     }
     
     

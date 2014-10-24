@@ -34,13 +34,17 @@ public class FileController extends AbstractController<File>
     @Inject
     private MusicController musicController;
 
+    @Inject
+    private VideoController videoController;
+
     @Override
     protected BaseService<File> getBaseService()
     {
         return service;
     }
-    
-    public void uploadOnchange() {
+
+    public void uploadOnchange()
+    {
         current.setUpload(!current.isUpload());
     }
 
@@ -162,13 +166,14 @@ public class FileController extends AbstractController<File>
             current.setContentType(event.getFile().getContentType());
             //current.setFilePath(event.getFile().getFileName());
             current.setUpload(true);
-            
+
             String filePath = service.getFileStoreLocation(current);
-            
+
             filePath = filePath + java.io.File.separator + current.getId().
                     toString();
             service.validateDirectories(filePath);
-            filePath = filePath + java.io.File.separator + event.getFile().getFileName();
+            filePath = filePath + java.io.File.separator + event.getFile().
+                    getFileName();
 
             service.storeFile(current.getIs(), filePath);
             current.setFilePath(filePath);
@@ -211,20 +216,32 @@ public class FileController extends AbstractController<File>
             super.onAfterPersist();
         }
     }
-    
+
     private void updateToUpperController() throws CloneNotSupportedException
     {
         if (getCurrent().getFileType() == File.FileType.MUSIC)
-            {
-                musicController.getCurrent().
-                        setMusicFile((File) current.clone());
-            }
-            else if (getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
-            {
+        {
+            musicController.getCurrent().
+                    setMusicFile((File) current.clone());
+        }
+        else if (getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
+        {
 
-                musicController.getCurrent().
-                        setThumbFile((File) current.clone());
-            }
+            musicController.getCurrent().
+                    setThumbFile((File) current.clone());
+        }
+        else if (getCurrent().getFileType() == File.FileType.VIDEO)
+        {
+
+            videoController.getCurrent().
+                    setVideoFile((File) current.clone());
+        }
+        else if (getCurrent().getFileType() == File.FileType.THUMB_VIDEO)
+        {
+
+            videoController.getCurrent().
+                    setThumbFile((File) current.clone());
+        }
     }
 
 }

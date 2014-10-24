@@ -20,9 +20,9 @@
                     <p:ajax update="@form"/>
                 </p:selectBooleanCheckbox>
 
-                <p:outputLabel for="title" value="Browse" rendered="#{fileController.current.upload}"/>
-                <p:fileUpload fileUploadListener="#{fileController.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                              update="@form :growl" sizeLimit="#{fileController.fileLimit == 0 ? 9999999999 : fileController.fileLimit}" 
+                <p:outputLabel id="browseTitle" value="Browse" rendered="#{fileController.current.upload}"/>
+                <p:fileUpload id="browse" fileUploadListener="#{fileController.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                              update="file :growl" sizeLimit="#{fileController.fileLimit == 0 ? 9999999999 : fileController.fileLimit}" 
                               fileLimit="1" allowTypes="/(\\.|\\/)(#{fileController.fileType})$/"
                               rendered="#{fileController.current.upload}"/>
 
