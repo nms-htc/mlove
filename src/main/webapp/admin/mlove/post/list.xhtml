@@ -104,20 +104,19 @@
                     <h:outputText value="#{post.description}"/>
                 </p:column>
 
-                <p:column style="width: 90px">
-                    <p:menuButton value="Action">
-                        <p:menuitem value="Edit"
-                                    actionListener="#{postController.prepareEntity(post)}"
-                                    update=":dlgEdit"
-                                    icon="ui-icon-pencils"
-                                    oncomplete="PF('dlgEdit').show();"/>
+                <p:column style="width: 140px">
+                    <p:commandButton value="Edit"
+                                     actionListener="#{postController.prepareEntity(post)}"
+                                     update=":dlgEdit"
+                                     icon="ui-icon-pencils"
+                                     oncomplete="PF('dlgEdit').show();"/>
 
-                        <p:menuitem value="Delete"
-                                    actionListener="#{postController.remove(post)}"
-                                    icon="ui-icon-close"
-                                    update="@form :growl">
-                        </p:menuitem>
-                    </p:menuButton>
+                    <p:commandButton value="Delete"
+                                     actionListener="#{postController.remove(post)}"
+                                     icon="ui-icon-close"
+                                     update="@form :growl">
+                        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>

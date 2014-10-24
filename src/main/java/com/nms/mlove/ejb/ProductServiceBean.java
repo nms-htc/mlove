@@ -99,7 +99,7 @@ public abstract class ProductServiceBean<T extends Product> extends AbstractServ
             }
 
             if (criteria.getTitle() != null && !criteria.getTitle().trim().isEmpty()) {
-                predicates.add(cb.like(cb.upper(root.get(Product_.title)), "%" + criteria.getTitle().trim() + "%"));
+                predicates.add(cb.like(cb.upper(root.get(Product_.title)), "%" + criteria.getTitle().trim().toUpperCase() + "%"));
             }
             
             if (criteria.getCat() != null) {

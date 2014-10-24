@@ -12,23 +12,23 @@
         <ui:include src="create.xhtml"/>
         <ui:include src="edit.xhtml"/>
     </ui:define>
-
+    
     <ui:define name="content">
         <h:form id="fmList">
             <p:messages globalOnly="true" closable="true"/>
+            
             <p:panel id="searchFormPanel" header="Search">
                 <h:panelGrid columns="4" width="100%">
-
                     <p:outputLabel for="title" value="Title"/>
-                    <p:inputText id="title" value="#{postCatController.current.title}">
+                    <p:inputText id="title" value="#{postCatController.itemSearch.title}">
                         <f:validateBean disabled="true"/>
                     </p:inputText>
 
                     <p:outputLabel for="createDate" value="Ngày tạo"/>
-                    <p:calendar id="createDate" value="#{postCatController.current.createdDate}"
+                    <p:calendar id="createDate" value="#{postCatController.itemSearch.createdDate}"
                                 showOn="button" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
-
+                
                 <f:facet name="footer">
                     <p:commandButton value="Add"
                                      icon="ui-icon-document"
@@ -37,7 +37,10 @@
                                      oncomplete="PF('dlgCreate').show();">
                         <p:resetInput target=":dlgCreate"/>
                     </p:commandButton>
-                    <p:commandButton value="Search" icon="ui-icon-search"/>
+                    <p:commandButton value="Search"
+                                     icon="ui-icon-search"
+                                     actionListener="#{postCatController.searchItem()}"
+                                     update="@form"/>
                 </f:facet>
             </p:panel>
             
@@ -52,7 +55,6 @@
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rowsPerPageTemplate="15,30,45"
                          resizableColumns="true">
-
                 <p:column headerText="STT" width="20" toggleable="false">
                     <h:outputText value="#{index + 1}"/>
                 </p:column>
@@ -66,22 +68,22 @@
                           sortBy="#{cat.description}">
                     <h:outputText value="#{cat.description}"/>
                 </p:column>
-
-                <p:column style="width: 90px">
-                    <p:menuButton value="Action">
-                        <p:menuitem value="Edit"
-                                    actionListener="#{postCatController.prepareEntity(cat)}"
-                                    update=":dlgEdit"
-                                    icon="ui-icon-pencils"
-                                    oncomplete="PF('dlgEdit').show();"/>
-
-                        <p:menuitem value="Delete"
-                                    actionListener="#{postCatController.remove(cat)}"
-                                    icon="ui-icon-close"
-                                    update="@form :growl"/>
-                    </p:menuButton>
+                
+                <p:column style="width: 140px">
+                    <p:commandButton value="Edit"
+                                     actionListener="#{postCatController.prepareEntity(cat)}"
+                                     update=":dlgEdit"
+                                     icon="ui-icon-pencils"
+                                     oncomplete="PF('dlgEdit').show();"/>
+                    <p:commandButton value="Delete"
+                                     actionListener="#{postCatController.remove(cat)}"
+                                     icon="ui-icon-close"
+                                     update="@form :growl">
+                        <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>
+

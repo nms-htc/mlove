@@ -13,7 +13,9 @@ import com.nms.mlove.entity.PostCat;
 import com.nms.mlove.entity.Product;
 import com.nms.mlove.entity.Product_;
 import com.nms.mlove.service.CatService;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -22,6 +24,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -52,7 +55,7 @@ public abstract class CatServiceBean<T extends Cat> extends AbstractService<T> i
     @Override
     protected void onBeforePersist(T entity) {
         super.onBeforePersist(entity); //To change body of generated methods, choose Tools | Templates.
-        
+
         T checkCode = null;
         try {
             checkCode = findByTitle(entity.getTitle());
@@ -68,7 +71,7 @@ public abstract class CatServiceBean<T extends Cat> extends AbstractService<T> i
     @Override
     protected void onBeforeUpdate(T entity) {
         super.onBeforeUpdate(entity); //To change body of generated methods, choose Tools | Templates.
-        
+
         T checkCode = null;
         try {
             checkCode = findByTitle(entity.getTitle());
@@ -80,4 +83,18 @@ public abstract class CatServiceBean<T extends Cat> extends AbstractService<T> i
             // OK
         }
     }
+
+    @Override
+    protected List<Predicate> buildConditions(T criteria, Map<String, Object> filters, Root<T> root, CriteriaBuilder cb) {
+        List<Predicate> predicates = super.buildConditions(criteria, filters, root, cb);
+
+        if (criteria != null) {
+            if (criteria.getTitle() != null && !criteria.getTitle().trim().isEmpty()) {
+                predicates.add(cb.like(cb.upper(root.get(Cat_.title)), "%" + criteria.getTitle().trim().toUpperCase() + "%"));
+            }
+        }
+
+        return predicates;
+    }
+
 }
