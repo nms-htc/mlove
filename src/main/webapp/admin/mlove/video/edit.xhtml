@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:dialog id="dlgEdit" header="Edit Video" modal="true" widgetVar="dlgEdit">
+        <h:form id="fmEdit">
+            <h:panelGrid columns="2" width="100%" >
+                <p:outputLabel for="title" value="Title"/>
+                <p:inputText id="title" size="35" value="#{videoController.current.title}"/>
+
+                <p:outputLabel for="content" value="Content"/>
+                <p:inputTextarea id="content" rows="6" cols="50" value="#{videoController.current.content}"/>
+                
+                 <p:outputLabel for="thumbFile" value="Thumb File"/>
+                <p:outputLabel id="thumbFile" value="#{videoController.current.thumbFile == null ? '' : videoController.current.thumbFile.filePath}" />
+
+                <p:outputLabel value=""/>
+                <p:commandButton value="Change" icon="ui-icon-document" 
+                                 actionListener="#{fileController.prepareEntity(videoController.current.thumbFile, 'THUMB_VIDEO')}"
+                                 update=":dlgEditFile"
+                                 oncomplete="PF('dlgEditFile').show();">
+                    <p:resetInput target=":dlgEditFile"/>
+                </p:commandButton>
+
+                <p:outputLabel for="file" value="File"/>
+                <p:outputLabel id="file" value="#{videoController.current.videoFile == null ? '' : videoController.current.videoFile.filePath}" />
+
+                <p:outputLabel value=""/>
+                <p:commandButton value="Change" icon="ui-icon-document" 
+                                 actionListener="#{fileController.prepareEntity(videoController.current.videoFile, 'VIDEO')}"
+                                 update=":dlgEditFile"
+                                 oncomplete="PF('dlgEditFile').show();">
+                    <p:resetInput target=":dlgEditFile"/>
+                </p:commandButton>
+
+                <p:outputLabel for="value" value="Price"/>
+                <p:inputText id="value" size="20" value="#{videoController.current.price}">
+                    <f:convertNumber type="number"/>
+                </p:inputText>
+
+                <p:outputLabel for="description" value="Description"/>
+                <p:inputTextarea id="description" rows="6" cols="50" value="#{videoController.current.description}"/>
+
+                <p:outputLabel for="promotion" value="Promotion"/>
+                <p:selectBooleanCheckbox id="promotion" value="#{videoController.current.promotion}" />
+                
+                <p:outputLabel for="promoPrice" value="Promotion Price"/>
+                <p:inputText id="promoPrice" size="20" value="#{videoController.current.promoPrice}">
+                    <f:convertNumber type="number"/>
+                </p:inputText>
+                
+                <p:outputLabel for="category" value="Category"/>
+                <p:selectOneMenu id="category" 
+                                 value="#{videoController.current.cat}" 
+                                 converter="videoCatConvertor">
+                    <f:selectItems value="#{videoCatController.selectItems}"/>
+                </p:selectOneMenu>
+
+                <p:commandButton value="Update" icon="ui-icon-document" 
+                                 actionListener="#{videoController.update()}"
+                                 update="fmEdit :fmList"
+                                 oncomplete="PF('dlgEdit').hide();"
+                                 />
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:composition>

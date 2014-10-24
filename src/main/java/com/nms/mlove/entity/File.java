@@ -25,7 +25,8 @@ public class File extends BaseEntity {
         VIDEO,
         THUMB_IMAGE,
         THUMB_MUSIC,
-        THUMB_VIDEO
+        THUMB_VIDEO,
+        UNKNOW
     }
 
     private static final long serialVersionUID = -2874867851464343753L;
@@ -51,7 +52,7 @@ public class File extends BaseEntity {
     
     @Transient
     @XmlTransient
-    protected FileType fileType = FileType.IMAGE;
+    protected FileType fileType = FileType.UNKNOW;
 
     public FileType getFileType()
     {

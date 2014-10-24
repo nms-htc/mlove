@@ -7,6 +7,7 @@
 package com.nms.mlove.ejb;
 
 import com.nms.mlove.entity.VideoCat;
+import com.nms.mlove.service.VideoCatService;
 import javax.ejb.Stateless;
 
 /**
@@ -14,7 +15,7 @@ import javax.ejb.Stateless;
  * @author NamTA
  */
 @Stateless
-public class VideoCatServiceBean extends AbstractService<VideoCat>
+public class VideoCatServiceBean extends AbstractService<VideoCat> implements VideoCatService
 {
     private static final long serialVersionUID = -7600735615966059013L;
 
