@@ -116,17 +116,17 @@ public class FileServiceBean extends AbstractService<File> implements
     {
         String dir = "/admin/upload/other";
         if (entity.getFileType() == File.FileType.IMAGE
-                || entity.getFileType() == File.FileType.THUMB_IMAGE)
+                || entity.getFileType() == File.FileType.THUMB_IMAGE
+                || entity.getFileType() == File.FileType.THUMB_MUSIC
+                || entity.getFileType() == File.FileType.THUMB_VIDEO)
         {
             dir = AppConfig.props.getProperty("imageFileLocation", dir);
         }
-        else if (entity.getFileType() == File.FileType.MUSIC
-                || entity.getFileType() == File.FileType.THUMB_MUSIC)
+        else if (entity.getFileType() == File.FileType.MUSIC)
         {
             dir = AppConfig.props.getProperty("musicFileLocation", dir);
         }
-        else if (entity.getFileType() == File.FileType.VIDEO
-                || entity.getFileType() == File.FileType.THUMB_VIDEO)
+        else if (entity.getFileType() == File.FileType.VIDEO)
         {
             dir = AppConfig.props.getProperty("videoFileLocation", dir);
         }

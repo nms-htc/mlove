@@ -16,7 +16,7 @@
                 <p:inputTextarea id="content" rows="6" cols="50" value="#{videoController.current.content}"/>
                 
                 <p:outputLabel for="thumbFile" value="Thumb File"/>
-                <p:outputLabel id="thumbFile" value="#{videoController.current.thumbFile == null ? '' : musicController.current.thumbFile.filePath}" />
+                <p:outputLabel id="thumbFile" value="#{videoController.current.thumbFile == null ? '' : videoController.current.thumbFile.filePath}" />
 
                 <p:outputLabel value=""/>
                 <p:commandButton value="Get File" icon="ui-icon-document" 

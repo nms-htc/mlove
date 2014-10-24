@@ -12,7 +12,6 @@ import com.nms.mlove.util.AppConfig;
 import com.nms.mlove.util.MessageUtil;
 import java.io.IOException;
 import javax.ejb.EJB;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -51,7 +50,7 @@ public class FileController extends AbstractController<File>
     public void prepareEntity(File entity, String type)
     {
         super.prepareEntity(entity);
-        File.FileType fileType = File.FileType.MUSIC;
+        File.FileType fileType = File.FileType.UNKNOW;
         switch (type)
         {
             case "THUMB_IMAGE":
@@ -80,7 +79,7 @@ public class FileController extends AbstractController<File>
     public void resetEntity(String type)
     {
         super.resetEntity();
-        File.FileType fileType = File.FileType.MUSIC;
+        File.FileType fileType = File.FileType.UNKNOW;
 
         switch (type)
         {
@@ -111,17 +110,17 @@ public class FileController extends AbstractController<File>
     {
         String allType = "*";
         if (getCurrent().getFileType() == File.FileType.IMAGE
-                || getCurrent().getFileType() == File.FileType.THUMB_IMAGE)
+                || getCurrent().getFileType() == File.FileType.THUMB_IMAGE
+                || getCurrent().getFileType() == File.FileType.THUMB_MUSIC
+                || getCurrent().getFileType() == File.FileType.THUMB_VIDEO)
         {
             return AppConfig.props.getProperty("imageFileType", allType);
         }
-        else if (getCurrent().getFileType() == File.FileType.MUSIC
-                || getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
+        else if (getCurrent().getFileType() == File.FileType.MUSIC)
         {
             return AppConfig.props.getProperty("musicFileType", allType);
         }
-        else if (getCurrent().getFileType() == File.FileType.VIDEO
-                || getCurrent().getFileType() == File.FileType.THUMB_VIDEO)
+        else if (getCurrent().getFileType() == File.FileType.VIDEO)
         {
             return AppConfig.props.getProperty("videoFileType", allType);
         }
@@ -136,19 +135,19 @@ public class FileController extends AbstractController<File>
         String unlimit = "0";
         String limitSize = unlimit;
         if (getCurrent().getFileType() == File.FileType.IMAGE
-                || getCurrent().getFileType() == File.FileType.THUMB_IMAGE)
+                || getCurrent().getFileType() == File.FileType.THUMB_IMAGE
+                || getCurrent().getFileType() == File.FileType.THUMB_MUSIC
+                || getCurrent().getFileType() == File.FileType.THUMB_VIDEO)
         {
             limitSize = AppConfig.props.getProperty("imageFileSizeLimit",
                     unlimit);
         }
-        else if (getCurrent().getFileType() == File.FileType.MUSIC
-                || getCurrent().getFileType() == File.FileType.THUMB_MUSIC)
+        else if (getCurrent().getFileType() == File.FileType.MUSIC)
         {
             limitSize = AppConfig.props.getProperty("musicFileSizeLimit",
                     unlimit);
         }
-        else if (getCurrent().getFileType() == File.FileType.VIDEO
-                || getCurrent().getFileType() == File.FileType.THUMB_VIDEO)
+        else if (getCurrent().getFileType() == File.FileType.VIDEO)
         {
             limitSize = AppConfig.props.getProperty("videoFileSizeLimit",
                     unlimit);
