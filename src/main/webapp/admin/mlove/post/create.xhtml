@@ -31,6 +31,13 @@
                     <f:convertNumber type="number"/>
                 </p:inputText>
                 
+                <p:outputLabel for="category" value="Category"/>
+                <p:selectOneMenu id="category" 
+                                 value="#{postController.current.cat}" 
+                                 converter="postCatConvertor">
+                    <f:selectItems value="#{postCatController.selectItems}"/>
+                </p:selectOneMenu>
+                
                 <p:commandButton value="Create" icon="ui-icon-document" 
                                  actionListener="#{postController.persist()}"
                                  update="fmCreate :fmList"

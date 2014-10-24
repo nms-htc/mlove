@@ -36,9 +36,13 @@
                 <h:form>
                     <p:menu style="width:97.5%">
                         <p:menuitem value="Home" icon="ui-icon-home"/>
+                        <p:submenu label="Category">
+                            <p:menuitem value="Music Category" outcome="/admin/mlove/musiccat/list.xhtml"/>
+                            <p:menuitem value="Post Category" outcome="/admin/mlove/postcat/list.xhtml"/>
+                            <p:menuitem value="Video Category"/>
+                        </p:submenu>
                         <p:submenu label="Product">
                             <p:menuitem value="Music" outcome="/admin/mlove/music/list.xhtml"/>
-                            <p:menuitem value="Music Category" outcome="/admin/mlove/musiccat/list.xhtml"/>
                             <p:menuitem value="Post" outcome="/admin/mlove/post/list.xhtml"/>
                             <p:menuitem value="Video"/>
                         </p:submenu>

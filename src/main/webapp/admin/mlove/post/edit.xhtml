@@ -5,7 +5,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <p:dialog id="dlgEdit" header="Update post" modal="true" widgetVar="dlgEdit">
+    <p:dialog id="dlgEdit" header="Edit post" modal="true" widgetVar="dlgEdit">
         <h:form id="fmEdit">
             <h:panelGrid columns="2" width="100%" >
                 <p:outputLabel for="title" value="Title"/>
@@ -29,6 +29,13 @@
                 <p:inputText id="promoPrice" size="20" value="#{postController.current.promoPrice}">
                     <f:convertNumber type="number"/>
                 </p:inputText>
+                
+                <p:outputLabel for="category" value="Category"/>
+                <p:selectOneMenu id="category" 
+                                 value="#{postController.current.cat}" 
+                                 converter="postCatConvertor">
+                    <f:selectItems value="#{postCatController.selectItems}"/>
+                </p:selectOneMenu>
 
                 <p:commandButton value="Update" icon="ui-icon-document" 
                                  actionListener="#{postController.update()}"

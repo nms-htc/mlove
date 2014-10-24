@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import org.primefaces.model.LazyDataModel;
 
@@ -35,6 +36,14 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
 
     public void resetEntity() {
         current = null;
+    }
+    
+    public void search(ActionEvent e) {
+        resetModel();
+    }
+    
+    private void resetModel() { 
+        model = null;
     }
 
     public void prepareEntity(T entity) {
@@ -94,6 +103,7 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
      * Call back method update action
      */
     protected void onAfterUpdate() {
+        current = initEntity();
     }
 
     /**
@@ -197,7 +207,7 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
      * @return new instance of LazyDataModel for the entity.
      */
     protected LazyDataModel<T> initDataModel() {
-        return new AbstractLazyDataModel<T>() {
+        return new AbstractLazyDataModel<T>(current) {
             private static final long serialVersionUID = 1L;
 
             @Override

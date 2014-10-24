@@ -21,4 +21,5 @@ public class PostServiceBean extends ProductServiceBean<Post> implements PostSer
     public PostServiceBean() {
         super(Post.class);
     }
+
 }

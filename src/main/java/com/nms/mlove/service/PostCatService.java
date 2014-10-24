@@ -5,14 +5,15 @@
  */
 package com.nms.mlove.service;
 
-import com.nms.mlove.entity.Cat;
+import com.nms.mlove.entity.Post;
+import com.nms.mlove.entity.PostCat;
+import java.util.List;
 
 /**
  *
  * @author MinhDT
- * @param <T>
  */
-public interface CatService<T extends Cat> extends BaseService<T> {
-
-    public T findByTitle(String title);
+public interface PostCatService extends CatService<PostCat>{
+    
+    public List<Post> findItemUsingCat(long id);
 }

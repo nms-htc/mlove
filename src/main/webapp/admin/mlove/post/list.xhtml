@@ -15,7 +15,7 @@
 
     <ui:define name="content">
         <h:form id="fmList">
-            <p:messages/>
+            <p:messages globalOnly="true" closable="true"/>
             <p:panel id="searchFormPanel" header="Search">
                 <h:panelGrid columns="4" width="100%">
 
@@ -35,7 +35,11 @@
                                      oncomplete="PF('dlgCreate').show();">
                         <p:resetInput target=":dlgCreate"/>
                     </p:commandButton>
-                    <p:commandButton value="Search" icon="ui-icon-search"/>
+                    <p:commandButton value="Search"
+                                     icon="ui-icon-search"
+                                     actionListener="#{postController.search}" 
+                                     ajax="true"
+                                     update="tbList"/>
                 </f:facet>
             </p:panel>
             <br/>
@@ -63,6 +67,20 @@
                 <p:column headerText="Price"
                           sortBy="#{post.price}">
                     <h:outputText value="#{post.price}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="Downloaded"
+                          sortBy="#{post.downCount}">
+                    <h:outputText value="#{post.downCount}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="Viewed"
+                          sortBy="#{post.viewCount}">
+                    <h:outputText value="#{post.viewCount}">
                         <f:convertNumber type="number"/>
                     </h:outputText>
                 </p:column>
