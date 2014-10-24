@@ -6,7 +6,7 @@
                 template="../../template/template.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="title">Music</ui:define>
+    <ui:define name="title">Video</ui:define>
 
     <ui:define name="dialogs">
         <ui:include src="create.xhtml"/>
@@ -25,14 +25,14 @@
                     <p:inputText id="title"/>
 
                     <p:outputLabel for="createDate" value="Ngày tạo" />
-                    <p:calendar id="createDate" value="#{musicController.current.createdDate}"
+                    <p:calendar id="createDate" value="#{videoController.current.createdDate}"
                                 showOn="button" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
 
                 <f:facet name="footer">
                     <p:commandButton value="Add"
                                      icon="ui-icon-document"
-                                     actionListener="#{musicController.resetEntity()}"
+                                     actionListener="#{videoController.resetEntity()}"
                                      update=":dlgCreate"
                                      oncomplete="PF('dlgCreate').show();">
                         <p:resetInput target=":dlgCreate"/>
@@ -44,8 +44,8 @@
             <p:dataTable id="tbList"
                          widgetVar="tbList"
                          rowIndexVar="index"
-                         var="music"
-                         value="#{musicController.model}"
+                         var="video"
+                         value="#{videoController.model}"
                          lazy="true"
                          paginator="true"
                          rows="15"
@@ -58,31 +58,31 @@
                 </p:column>
 
                 <p:column headerText="Title"
-                          sortBy="#{music.title}">
-                    <h:outputText value="#{music.title}"/>
+                          sortBy="#{video.title}">
+                    <h:outputText value="#{video.title}"/>
                 </p:column>
 
                 <p:column headerText="Price"
-                          sortBy="#{music.price}">
-                    <h:outputText value="#{music.price}">
+                          sortBy="#{video.price}">
+                    <h:outputText value="#{video.price}">
                         <f:convertNumber type="number"/>
                     </h:outputText>
                 </p:column>
 
                 <p:column headerText="Description"
-                          sortBy="#{music.description}">
-                    <h:outputText value="#{music.description}"/>
+                          sortBy="#{video.description}">
+                    <h:outputText value="#{video.description}"/>
                 </p:column>
 
                 <p:column style="width: 90px">
                     <p:commandButton title="Edit"
-                                    actionListener="#{musicController.prepareEntity(music)}"
+                                    actionListener="#{videoController.prepareEntity(video)}"
                                     update=":dlgEdit"
                                     icon="ui-icon-pencils"
                                     oncomplete="PF('dlgEdit').show();"/>
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{musicController.remove(music)}"
+                                     actionListener="#{videoController.remove(video)}"
                                      immediate="true"
                                      title="Delete"
                                      update="@form :growl"> 

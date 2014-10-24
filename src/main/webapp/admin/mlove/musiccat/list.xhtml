@@ -65,20 +65,22 @@
                     <h:outputText value="#{musicCat.description}"/>
                 </p:column>
 
-                <p:column style="width: 90px">
-                    <p:menuButton value="Action">
-                        <p:menuitem value="Edit"
-                                    actionListener="#{musicCatController.prepareEntity(musicCat)}"
-                                    update=":dlgEdit"
-                                    icon="ui-icon-pencils"
-                                    oncomplete="PF('dlgEdit').show();"/>
-
-                        <p:menuitem value="Delete"
-                                    actionListener="#{musicCatController.remove(musicCat)}"
-                                    icon="ui-icon-close"
-                                    update="@form :growl">
-                        </p:menuitem>
-                    </p:menuButton>
+                <p:column style="width: 90px">                    
+                    <p:commandButton title="Edit"
+                                     actionListener="#{musicCatController.prepareEntity(musicCat)}"
+                                     update=":dlgEdit"
+                                     icon="ui-icon-pencils"
+                                     oncomplete="PF('dlgEdit').show();"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-trash"
+                                     actionListener="#{musicCatController.remove(musicCat)}"
+                                     immediate="true"
+                                     title="Delete"
+                                     update="@form :growl"> 
+                        <p:confirm header="Confirmation"
+                                   message="Are you sure?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
                 </p:column>
             </p:dataTable>
         </h:form>

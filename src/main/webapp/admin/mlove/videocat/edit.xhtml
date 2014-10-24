@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:dialog id="dlgEdit" header="Edit video category" modal="true" widgetVar="dlgEdit">
+        <h:form id="fmEdit">
+            <h:panelGrid columns="2" width="100%" >
+                <p:outputLabel for="title" value="Title"/>
+                <p:inputText id="title" size="35" value="#{videoCatController.current.title}"/>
+
+                <p:outputLabel for="description" value="Description"/>
+                <p:inputTextarea id="description" rows="6" cols="50" value="#{videoCatController.current.description}"/>
+
+                <p:commandButton value="Update" icon="ui-icon-document" 
+                                 actionListener="#{videoCatController.update()}"
+                                 update="fmEdit :fmList"
+                                 oncomplete="PF('dlgEdit').hide();"
+                                 />
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+</ui:composition>

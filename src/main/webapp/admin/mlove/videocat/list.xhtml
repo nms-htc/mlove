@@ -3,16 +3,14 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="../../template/template.xhtml"
+                template="/admin/template/template.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="title">Music</ui:define>
+    <ui:define name="title">Video Category</ui:define>
 
     <ui:define name="dialogs">
         <ui:include src="create.xhtml"/>
         <ui:include src="edit.xhtml"/>
-        <ui:include src="../file/upload.xhtml"/>
-        <ui:include src="../file/editFile.xhtml"/>
     </ui:define>
 
     <ui:define name="content">
@@ -24,15 +22,15 @@
                     <p:outputLabel for="title" value="Title"/>
                     <p:inputText id="title"/>
 
-                    <p:outputLabel for="createDate" value="Ngày tạo" />
-                    <p:calendar id="createDate" value="#{musicController.current.createdDate}"
+                    <p:outputLabel for="createDate" value="Ngày tạo"/>
+                    <p:calendar id="createDate" value="#{videoCatController.current.createdDate}"
                                 showOn="button" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
 
                 <f:facet name="footer">
                     <p:commandButton value="Add"
                                      icon="ui-icon-document"
-                                     actionListener="#{musicController.resetEntity()}"
+                                     actionListener="#{videoCatController.resetEntity()}"
                                      update=":dlgCreate"
                                      oncomplete="PF('dlgCreate').show();">
                         <p:resetInput target=":dlgCreate"/>
@@ -44,8 +42,8 @@
             <p:dataTable id="tbList"
                          widgetVar="tbList"
                          rowIndexVar="index"
-                         var="music"
-                         value="#{musicController.model}"
+                         var="videoCat"
+                         value="#{videoCatController.model}"
                          lazy="true"
                          paginator="true"
                          rows="15"
@@ -58,31 +56,24 @@
                 </p:column>
 
                 <p:column headerText="Title"
-                          sortBy="#{music.title}">
-                    <h:outputText value="#{music.title}"/>
-                </p:column>
-
-                <p:column headerText="Price"
-                          sortBy="#{music.price}">
-                    <h:outputText value="#{music.price}">
-                        <f:convertNumber type="number"/>
-                    </h:outputText>
+                          sortBy="#{videoCat.title}">
+                    <h:outputText value="#{videoCat.title}"/>
                 </p:column>
 
                 <p:column headerText="Description"
-                          sortBy="#{music.description}">
-                    <h:outputText value="#{music.description}"/>
+                          sortBy="#{videoCat.description}">
+                    <h:outputText value="#{videoCat.description}"/>
                 </p:column>
 
                 <p:column style="width: 90px">
                     <p:commandButton title="Edit"
-                                    actionListener="#{musicController.prepareEntity(music)}"
-                                    update=":dlgEdit"
-                                    icon="ui-icon-pencils"
-                                    oncomplete="PF('dlgEdit').show();"/>
+                                     actionListener="#{videoCatController.prepareEntity(videoCat)}"
+                                     update=":dlgEdit"
+                                     icon="ui-icon-pencils"
+                                     oncomplete="PF('dlgEdit').show();"/>
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-trash"
-                                     actionListener="#{musicController.remove(music)}"
+                                     actionListener="#{videoCatController.remove(videoCat)}"
                                      immediate="true"
                                      title="Delete"
                                      update="@form :growl"> 
