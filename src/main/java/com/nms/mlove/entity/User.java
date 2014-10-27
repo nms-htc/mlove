@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,6 +21,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 1.0
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "User.findByUP", query = "SELECT u FROM User u WHERE u.username = :username and u.password = :password"),
+    @NamedQuery(name = "User.findByU", query = "SELECT u FROM User u WHERE u.username = :username")
+})
 @Table(name = "ML_USER")
 @XmlRootElement
 public class User extends BaseEntity {

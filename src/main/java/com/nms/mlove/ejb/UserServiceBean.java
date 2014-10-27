@@ -14,6 +14,7 @@ import com.nms.mlove.util.Validator;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -111,7 +112,7 @@ public class UserServiceBean extends AbstractService<User> implements UserServic
         md.reset();
         md.update(value.getBytes("UTF-8"));
         byte[] hashed = md.digest();
-        return DatatypeConverter.printBase64Binary(hashed);
+        return Base64.getEncoder().encodeToString(hashed);
     }
 
     @Override

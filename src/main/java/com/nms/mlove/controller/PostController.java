@@ -6,10 +6,12 @@
 package com.nms.mlove.controller;
 
 import com.nms.mlove.entity.Post;
+import com.nms.mlove.entity.User;
 import com.nms.mlove.service.BaseService;
 import com.nms.mlove.service.PostService;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -29,5 +31,5 @@ public class PostController extends AbstractController<Post> {
     protected BaseService<Post> getBaseService() {
         return service;
     }
-
+    
 }
