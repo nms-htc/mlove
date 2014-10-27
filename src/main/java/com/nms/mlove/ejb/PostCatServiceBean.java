@@ -5,22 +5,9 @@
  */
 package com.nms.mlove.ejb;
 
-import com.nms.mlove.entity.BaseEntity_;
-import com.nms.mlove.entity.Post;
 import com.nms.mlove.entity.PostCat;
-import com.nms.mlove.entity.Post_;
-import com.nms.mlove.entity.Product_;
 import com.nms.mlove.service.PostCatService;
-import java.util.List;
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
 
 /**
  *

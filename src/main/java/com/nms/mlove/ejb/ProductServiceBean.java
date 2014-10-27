@@ -5,9 +5,7 @@
  */
 package com.nms.mlove.ejb;
 
-import com.nms.mlove.entity.BaseEntity_;
 import com.nms.mlove.entity.Cat;
-import com.nms.mlove.entity.Post;
 import com.nms.mlove.entity.Product;
 import com.nms.mlove.entity.Product_;
 import com.nms.mlove.service.ProductService;
@@ -19,9 +17,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -34,15 +29,8 @@ public abstract class ProductServiceBean<T extends Product> extends AbstractServ
 
     private static final long serialVersionUID = 1544559586143371219L;
 
-    private Class<T> entityClass;
-
     public ProductServiceBean(Class<T> entityClass) {
         super(entityClass);
-        setProductClass(entityClass);
-    }
-
-    private void setProductClass(Class<T> entityClass) {
-        this.entityClass = entityClass;
     }
 
     @Override

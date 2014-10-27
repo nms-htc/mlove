@@ -69,14 +69,12 @@
                     <h:outputText value="#{cat.description}"/>
                 </p:column>
                 
-                <p:column style="width: 140px">
-                    <p:commandButton value="Edit"
-                                     actionListener="#{postCatController.prepareEntity(cat)}"
+                <p:column style="width: 60px">
+                    <p:commandButton actionListener="#{postCatController.prepareEntity(cat)}"
                                      update=":dlgEdit"
-                                     icon="ui-icon-pencils"
+                                     icon="ui-icon-pencil"
                                      oncomplete="PF('dlgEdit').show();"/>
-                    <p:commandButton value="Delete"
-                                     actionListener="#{postCatController.remove(cat)}"
+                    <p:commandButton actionListener="#{postCatController.remove(cat)}"
                                      icon="ui-icon-close"
                                      update="@form :growl">
                         <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />

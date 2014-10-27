@@ -11,6 +11,7 @@
     <ui:define name="dialogs">
         <ui:include src="create.xhtml"/>
         <ui:include src="edit.xhtml"/>
+        <ui:include src="changePassword.xhtml"/>
     </ui:define>
 
     <ui:define name="content">
@@ -18,36 +19,27 @@
             <p:messages globalOnly="true" closable="true"/>
             <p:panel id="searchFormPanel" header="Search">
                 <h:panelGrid columns="8" width="100%">
-
-                    <p:outputLabel for="category" value="Category"/>
-                    <p:selectOneMenu id="category" 
-                                     value="#{postController.itemSearch.cat}" 
-                                     converter="postCatConvertor">
-                        <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
-                        <f:selectItems value="#{postCatController.selectItems}"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel for="title" value="Title"/>
-                    <p:inputText id="title" value="#{postController.itemSearch.title}">
+                    <p:outputLabel for="user" value="User"/>
+                    <p:inputText id="user" value="#{userController.itemSearch.username}">
                         <f:validateBean disabled="true"/>
                     </p:inputText>
 
                     <p:outputLabel for="createDate" value="Ngày tạo"/>
-                    <p:calendar id="createDate" value="#{postController.itemSearch.createdDate}"
+                    <p:calendar id="createDate" value="#{userController.itemSearch.createdDate}"
                                 showOn="button" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
 
                 <f:facet name="footer">
                     <p:commandButton value="Add"
                                      icon="ui-icon-document"
-                                     actionListener="#{postController.resetEntity()}"
+                                     actionListener="#{userController.resetEntity()}"
                                      update=":dlgCreate"
                                      oncomplete="PF('dlgCreate').show();">
                         <p:resetInput target=":dlgCreate"/>
                     </p:commandButton>
                     <p:commandButton value="Search"
                                      icon="ui-icon-search"
-                                     actionListener="#{postController.searchItem()}"
+                                     actionListener="#{userController.searchItem()}"
                                      update="@form"/>
                 </f:facet>
             </p:panel>
@@ -55,8 +47,8 @@
             <p:dataTable id="tbList"
                          widgetVar="tbList"
                          rowIndexVar="index"
-                         var="post"
-                         value="#{postController.model}"
+                         var="user"
+                         value="#{userController.model}"
                          lazy="true"
                          paginator="true"
                          rows="15"
@@ -68,49 +60,45 @@
                     <h:outputText value="#{index + 1}"/>
                 </p:column>
 
-                <p:column headerText="Category"
-                          sortBy="#{post.cat.title}">
-                    <h:outputText value="#{post.cat.title}"/>
+                <p:column headerText="Group">
+                    <ui:repeat value="#{user.groups}" var="group" varStatus="vs">
+                        <h:outputText value="#{group}"/>
+                        <h:outputText value=", " rendered="#{!vs.last}"/>
+                    </ui:repeat>
                 </p:column>
 
-                <p:column headerText="Title"
-                          sortBy="#{post.title}">
-                    <h:outputText value="#{post.title}"/>
+                <p:column headerText="User name"
+                          sortBy="#{user.username}">
+                    <h:outputText value="#{user.username}"/>
                 </p:column>
 
-                <p:column headerText="Price"
-                          sortBy="#{post.price}">
-                    <h:outputText value="#{post.price}">
-                        <f:convertNumber type="number"/>
-                    </h:outputText>
+                <p:column headerText="Full name" 
+                          sortBy="#{user.fullname}">
+                    <h:outputText value="#{user.fullname}"/>
                 </p:column>
 
-                <p:column headerText="Downloaded"
-                          sortBy="#{post.downCount}">
-                    <h:outputText value="#{post.downCount}">
-                        <f:convertNumber type="number"/>
-                    </h:outputText>
+                <p:column headerText="Email" 
+                          sortBy="#{user.email}">
+                    <h:outputText value="#{user.email}"/>
                 </p:column>
 
-                <p:column headerText="Viewed"
-                          sortBy="#{post.viewCount}">
-                    <h:outputText value="#{post.viewCount}">
-                        <f:convertNumber type="number"/>
-                    </h:outputText>
+                <p:column headerText="Description" 
+                          sortBy="#{user.description}">
+                    <h:outputText value="#{user.description}"/>
                 </p:column>
 
-                <p:column headerText="Description"
-                          sortBy="#{post.description}">
-                    <h:outputText value="#{post.description}"/>
-                </p:column>
-
-                <p:column style="width: 60px">
-                    <p:commandButton actionListener="#{postController.prepareEntity(post)}"
+                <p:column style="width: 90px">
+                    <p:commandButton actionListener="#{userController.prepareEntity(user)}"
                                      update=":dlgEdit"
                                      icon="ui-icon-pencil"
                                      oncomplete="PF('dlgEdit').show();"/>
 
-                    <p:commandButton actionListener="#{postController.remove(post)}"
+                    <p:commandButton icon="ui-icon-key"
+                                     update=":dlgChangePass"
+                                     actionListener="#{userController.prepareChangePassword(user)}"
+                                     oncomplete="PF('dlgChangePass').show();"/>
+
+                    <p:commandButton actionListener="#{userController.remove(user)}"
                                      icon="ui-icon-close"
                                      update="@form :growl">
                         <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
