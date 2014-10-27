@@ -20,10 +20,12 @@
                 <h:panelGrid columns="4" width="100%">
 
                     <p:outputLabel for="title" value="Title"/>
-                    <p:inputText id="title"/>
+                    <p:inputText id="title" value="#{videoCatController.itemSearch.title}">
+                        <f:validateBean disabled="true"/>
+                    </p:inputText>
 
                     <p:outputLabel for="createDate" value="Ngày tạo"/>
-                    <p:calendar id="createDate" value="#{videoCatController.current.createdDate}"
+                    <p:calendar id="createDate" value="#{videoCatController.itemSearch.createdDate}"
                                 showOn="button" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
 

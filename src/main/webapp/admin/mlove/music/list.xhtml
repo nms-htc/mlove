@@ -20,12 +20,21 @@
             <p:messages globalOnly="true" closable="true"/>
             <p:panel id="searchFormPanel" header="Search">
                 <h:panelGrid columns="4" width="100%">
+                    <p:outputLabel for="category" value="Category"/>
+                    <p:selectOneMenu id="category" 
+                                     value="#{musicController.itemSearch.cat}" 
+                                     converter="musicCatConvertor">
+                        <f:selectItem itemLabel="Select one" noSelectionOption="true"/>
+                        <f:selectItems value="#{musicCatController.selectItems}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel for="title" value="Title"/>
-                    <p:inputText id="title"/>
+                    <p:inputText id="title" value="#{musicController.itemSearch.title}">
+                        <f:validateBean disabled="true"/>
+                    </p:inputText>
 
-                    <p:outputLabel for="createDate" value="Ngày tạo" />
-                    <p:calendar id="createDate" value="#{musicController.current.createdDate}"
+                    <p:outputLabel for="createDate" value="Ngày tạo"/>
+                    <p:calendar id="createDate" value="#{musicController.itemSearch.createdDate}"
                                 showOn="button" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
 
@@ -76,10 +85,10 @@
 
                 <p:column style="width: 90px">
                     <p:commandButton title="Edit"
-                                    actionListener="#{musicController.prepareEntity(music)}"
-                                    update=":dlgEdit"
-                                    icon="ui-icon-pencils"
-                                    oncomplete="PF('dlgEdit').show();">
+                                     actionListener="#{musicController.prepareEntity(music)}"
+                                     update=":dlgEdit"
+                                     icon="ui-icon-pencils"
+                                     oncomplete="PF('dlgEdit').show();">
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-trash"
                                      actionListener="#{musicController.remove(music)}"
