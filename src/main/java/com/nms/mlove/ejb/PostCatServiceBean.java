@@ -22,20 +22,4 @@ public class PostCatServiceBean extends CatServiceBean<PostCat> implements PostC
         super(PostCat.class);
     }
 
-//    @Override
-//    protected void onBeforeRemove(PostCat entity) {
-//        super.onBeforeRemove(entity);
-//        
-//        List<Post> listItem = null;
-//        try {
-//            listItem = findItemUsingCat(entity.getId());
-//
-//            if (listItem != null && !listItem.isEmpty()) {
-//                throw new EJBException("category-in-used");
-//            }
-//        } catch (NoResultException e) {
-//            // OK
-//        }
-//    }
-
 }
