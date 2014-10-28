@@ -12,7 +12,7 @@ import com.nms.mlove.entity.MusicCat;
  *
  * @author NamTA
  */
-public interface MusicCatService extends BaseService<MusicCat>
+public interface MusicCatService extends CatService<MusicCat>
 {
     
 }

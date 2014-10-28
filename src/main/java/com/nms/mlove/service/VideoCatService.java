@@ -12,7 +12,7 @@ import com.nms.mlove.entity.VideoCat;
  *
  * @author NamTA
  */
-public interface VideoCatService extends BaseService<VideoCat>
+public interface VideoCatService extends CatService<VideoCat>
 {
     
 }

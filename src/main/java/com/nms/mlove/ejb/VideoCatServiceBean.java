@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
  * @author NamTA
  */
 @Stateless
-public class VideoCatServiceBean extends AbstractService<VideoCat> implements VideoCatService
+public class VideoCatServiceBean extends CatServiceBean<VideoCat> implements VideoCatService
 {
     private static final long serialVersionUID = -7600735615966059013L;
 

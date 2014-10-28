@@ -46,7 +46,10 @@
                                      oncomplete="PF('dlgCreate').show();">
                         <p:resetInput target=":dlgCreate"/>
                     </p:commandButton>
-                    <p:commandButton value="Search" icon="ui-icon-search"/>
+                    <p:commandButton value="Search"
+                                     icon="ui-icon-search"
+                                     actionListener="#{musicController.searchItem()}"
+                                     update="@form" />
                 </f:facet>
             </p:panel>
             <br/>

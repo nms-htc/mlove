@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
  * @author NamTA
  */
 @Stateless
-public class MusicCatServiceBean extends AbstractService<MusicCat> implements MusicCatService
+public class MusicCatServiceBean extends CatServiceBean<MusicCat> implements MusicCatService
 {
     private static final long serialVersionUID = 3184346321046321253L;
 
