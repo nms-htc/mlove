@@ -12,6 +12,7 @@ import com.nms.mlove.util.JsfUtil;
 import com.nms.mlove.util.MessageUtil;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.model.SelectItem;
@@ -27,7 +28,7 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
     private static final long serialVersionUID = -1374442757454130534L;
 
     protected T current;
-    private T itemSearch = initEntity();
+    private T itemSearch;
     protected LazyDataModel<T> model;
     protected SelectItem[] selectItems;
 
@@ -268,7 +269,7 @@ public abstract class AbstractController<T extends BaseEntity> implements Serial
         if (itemSearch == null) {
             itemSearch = initEntity();
         }
-        
+
         return itemSearch;
     }
 
