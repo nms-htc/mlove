@@ -68,6 +68,11 @@
                 <p:column headerText="STT" width="20" toggleable="false">
                     <h:outputText value="#{index + 1}"/>
                 </p:column>
+                
+                <p:column headerText="Category"
+                          sortBy="#{video.cat.title}">
+                    <h:outputText value="#{video.cat.title}"/>
+                </p:column>
 
                 <p:column headerText="Title"
                           sortBy="#{video.title}">
@@ -80,13 +85,28 @@
                         <f:convertNumber type="number"/>
                     </h:outputText>
                 </p:column>
+                
+                <p:column headerText="Downloaded"
+                          sortBy="#{video.downCount}">
+                    <h:outputText value="#{video.downCount}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Viewed"
+                          sortBy="#{video.viewCount}">
+                    <h:outputText value="#{video.viewCount}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+
 
                 <p:column headerText="Description"
                           sortBy="#{video.description}">
                     <h:outputText value="#{video.description}"/>
                 </p:column>
 
-                <p:column style="width: 90px">
+                <p:column style="width: 60px">
                     <p:commandButton title="Edit"
                                      actionListener="#{videoController.prepareEntity(video)}"
                                      update=":dlgEdit"

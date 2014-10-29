@@ -68,6 +68,11 @@
                 <p:column headerText="STT" width="20" toggleable="false">
                     <h:outputText value="#{index + 1}"/>
                 </p:column>
+                
+                <p:column headerText="Category"
+                          sortBy="#{music.cat.title}">
+                    <h:outputText value="#{music.cat.title}"/>
+                </p:column>
 
                 <p:column headerText="Title"
                           sortBy="#{music.title}">
@@ -81,12 +86,26 @@
                     </h:outputText>
                 </p:column>
 
+                <p:column headerText="Downloaded"
+                          sortBy="#{music.downCount}">
+                    <h:outputText value="#{music.downCount}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Viewed"
+                          sortBy="#{music.viewCount}">
+                    <h:outputText value="#{music.viewCount}">
+                        <f:convertNumber type="number"/>
+                    </h:outputText>
+                </p:column>
+
                 <p:column headerText="Description"
                           sortBy="#{music.description}">
                     <h:outputText value="#{music.description}"/>
                 </p:column>
 
-                <p:column style="width: 90px">
+                <p:column style="width: 60px">
                     <p:commandButton title="Edit"
                                      actionListener="#{musicController.prepareEntity(music)}"
                                      update=":dlgEdit"
