@@ -58,6 +58,10 @@
                                  converter="videoCatConvertor">
                     <f:selectItems value="#{videoCatController.selectItems}"/>
                 </p:selectOneMenu>
+                
+                <p:outputLabel for="startDate" value="Start Date"/>
+                <p:calendar id="startDate" value="#{videoController.current.startDate}"
+                                showOn="button" pattern="dd/MM/yyyy"/>
 
                 <p:commandButton value="Update" icon="ui-icon-document" 
                                  actionListener="#{videoController.update()}"

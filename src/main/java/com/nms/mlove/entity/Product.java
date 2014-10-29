@@ -1,6 +1,7 @@
 package com.nms.mlove.entity;
 
 import com.nms.mlove.util.StringUtil;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.DiscriminatorColumn;
@@ -13,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -64,6 +67,9 @@ public abstract class Product extends BaseEntity {
     @Min(0)
     @Column(name = "PROMO_PRICE")
     private double promoPrice;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
     
     @ManyToOne
     @JoinColumn(name = "CAT_ID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -139,6 +145,14 @@ public abstract class Product extends BaseEntity {
 
     public void setCat(Cat cat) {
         this.cat = cat;
+    }
+    
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     @Override

@@ -58,6 +58,10 @@
                                  converter="musicCatConvertor">
                     <f:selectItems value="#{musicCatController.selectItems}"/>
                 </p:selectOneMenu>
+                
+                <p:outputLabel for="startDate" value="Start Date"/>
+                <p:calendar id="startDate" value="#{musicController.current.startDate}"
+                                showOn="button" pattern="dd/MM/yyyy"/>
 
                 <p:commandButton value="Update" icon="ui-icon-document" 
                                  actionListener="#{musicController.update()}"
