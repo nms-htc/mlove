@@ -11,8 +11,9 @@ import com.nms.mlove.service.FileService;
 import com.nms.mlove.util.AppConfig;
 import com.nms.mlove.util.MessageUtil;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -77,6 +78,12 @@ public class FileController extends AbstractController<File>
         }
 
         getCurrent().setFileType(fileType);
+    }
+    
+    @Override
+    public void resetEntity()
+    {
+        super.resetEntity();
     }
 
     public void resetEntity(String type)

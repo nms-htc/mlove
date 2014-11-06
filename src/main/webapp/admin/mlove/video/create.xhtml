@@ -22,7 +22,7 @@
                 <p:commandButton value="Get File" icon="ui-icon-document" 
                                  actionListener="#{fileController.resetEntity('THUMB_VIDEO')}"
                                  update=":dlgUpload"
-                                 oncomplete="PF('dlgUpload').show();">
+                                 oncomplete="PF('dlgUpload').show();" immediate="true">
                     <p:resetInput target=":dlgUpload"/>
                 </p:commandButton>
 
@@ -33,7 +33,7 @@
                 <p:commandButton value="Get File" icon="ui-icon-document" 
                                  actionListener="#{fileController.resetEntity('VIDEO')}"
                                  update=":dlgUpload"
-                                 oncomplete="PF('dlgUpload').show();">
+                                 oncomplete="PF('dlgUpload').show();" immediate="true">
                     <p:resetInput target=":dlgUpload"/>
                 </p:commandButton>
                 <p:outputLabel for="value" value="Price"/>
