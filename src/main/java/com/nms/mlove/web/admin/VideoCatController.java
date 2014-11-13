@@ -3,34 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package com.nms.mlove.controller.convertor;
+package com.nms.mlove.web.admin;
 
 import com.nms.mlove.entity.VideoCat;
 import com.nms.mlove.service.BaseService;
 import com.nms.mlove.service.VideoCatService;
 import javax.ejb.EJB;
-import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author NamTA
  */
-@FacesConverter("videoCatConvertor")
-public class VideoCatConvertor extends AbstractEntityConvertor<VideoCat>
-{
+@Named
+@ViewScoped
+public class VideoCatController extends AbstractManagedBean<VideoCat> {
+
+    private static final long serialVersionUID = -4528503654927658378L;
+
     @EJB
     private VideoCatService service;
-            
+
     @Override
-    protected BaseService<VideoCat> getBaseService()
-    {
+    protected BaseService<VideoCat> getBaseService() {
         return service;
     }
 
     @Override
-    protected Class<VideoCat> getEntityClass()
-    {
-        return VideoCat.class;
+    protected VideoCat initEntity() {
+        return new VideoCat();
     }
+
 }

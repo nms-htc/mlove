@@ -5,6 +5,7 @@
  */
 package com.nms.mlove.ejb;
 
+import com.nms.mlove.entity.BaseEntity_;
 import com.nms.mlove.entity.Cat;
 import com.nms.mlove.entity.Product;
 import com.nms.mlove.entity.Product_;
@@ -77,21 +78,20 @@ public abstract class ProductServiceBean<T extends Product> extends AbstractServ
         }
     }
 
-    @Override
     protected List<Predicate> buildConditions(T criteria, Map<String, Object> filters, Root<T> root, CriteriaBuilder cb) {
         List<Predicate> predicates = new ArrayList<>();
 
         if (criteria != null) {
             if (criteria.getCreatedDate() != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get(Product_.createdDate), criteria.getCreatedDate()));
+                predicates.add(cb.greaterThanOrEqualTo(root.get(BaseEntity_.createdDate), criteria.getCreatedDate()));
             }
 
             if (criteria.getTitle() != null && !criteria.getTitle().trim().isEmpty()) {
                 predicates.add(cb.like(cb.upper(root.get(Product_.title)), "%" + criteria.getTitle().trim().toUpperCase() + "%"));
             }
-            
+
             if (criteria.getCat() != null) {
-                predicates.add(cb.equal(root.get(Product_.cat),criteria.getCat()));
+                predicates.add(cb.equal(root.get(Product_.cat), criteria.getCat()));
             }
         }
         return predicates;
@@ -108,5 +108,4 @@ public abstract class ProductServiceBean<T extends Product> extends AbstractServ
         return q.getResultList();
     }
 
-    
 }

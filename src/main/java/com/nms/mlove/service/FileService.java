@@ -3,21 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.nms.mlove.service;
 
 import com.nms.mlove.entity.File;
-import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author NamTA
  */
-public interface FileService extends BaseService<File>
-{
-    public String getFileStoreLocation(File file);
-    
-    public void validateDirectories(String path);
-    
-    public void storeFile(InputStream isStream, String filePath);
+public interface FileService extends BaseService<File> {
+
 }

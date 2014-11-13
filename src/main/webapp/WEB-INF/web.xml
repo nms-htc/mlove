@@ -37,7 +37,7 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
-    <login-config>
+<!--    <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>mloveRealm</realm-name>
         <form-login-config>
@@ -65,7 +65,7 @@
     </security-role>
     <security-role>
         <role-name>User</role-name>
-    </security-role>
+    </security-role>-->
     
     <mime-mapping>
         <extension>eot</extension>

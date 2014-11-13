@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nms.mlove.controller.convertor;
+package com.nms.mlove.converter;
 
 import com.nms.mlove.entity.BaseEntity;
 import com.nms.mlove.service.BaseService;
@@ -19,32 +19,27 @@ import javax.faces.convert.Converter;
  * @param <T>
  */
 @SuppressWarnings("serial")
-public abstract class AbstractEntityConvertor<T extends BaseEntity> implements
-        Converter
-{
+public abstract class AbstractEntityConverter<T extends BaseEntity> implements
+        Converter {
+
     /* Factory method */
     protected abstract BaseService<T> getBaseService();
 
-    protected Long getKey(String keyStr)
-    {
+    protected Long getKey(String keyStr) {
         return Long.parseLong(keyStr);
     }
 
-    protected String getStringKey(T entity)
-    {
+    protected String getStringKey(T entity) {
         return String.valueOf(((BaseEntity) entity).getId());
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
-            String value)
-    {
-        if (value == null || value.trim().isEmpty())
-        {
+            String value) {
+        if (value == null || value.trim().isEmpty()) {
             return null;
         }
-        if (JsfUtil.isDummySelectItem(component, value))
-        {
+        if (JsfUtil.isDummySelectItem(component, value)) {
             return null;
         }
         return getBaseService().find(getKey(value));
@@ -52,19 +47,14 @@ public abstract class AbstractEntityConvertor<T extends BaseEntity> implements
 
     @Override
     public String getAsString(FacesContext context, UIComponent component,
-            Object value)
-    {
-        if (value == null)
-        {
+            Object value) {
+        if (value == null) {
             return null;
         }
-        if (value.getClass().equals(getEntityClass()))
-        {
+        if (value.getClass().equals(getEntityClass())) {
             T entity = (T) value;
             return getStringKey(entity);
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("object " + value
                     + " is of type " + value.getClass()
                     .getName() + "; expected type: " + getEntityClass().
@@ -72,10 +62,8 @@ public abstract class AbstractEntityConvertor<T extends BaseEntity> implements
         }
     }
 
-    protected Class<T> getEntityClass()
-    {
+    protected Class<T> getEntityClass() {
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).
                 getActualTypeArguments()[0];
     }
-
 }

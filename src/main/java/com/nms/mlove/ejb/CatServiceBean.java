@@ -5,6 +5,7 @@
  */
 package com.nms.mlove.ejb;
 
+import com.nms.mlove.entity.BaseEntity_;
 import com.nms.mlove.entity.Cat;
 import com.nms.mlove.entity.Cat_;
 import com.nms.mlove.service.CatService;
@@ -75,21 +76,4 @@ public abstract class CatServiceBean<T extends Cat> extends AbstractService<T> i
             // OK
         }
     }
-
-    @Override
-    protected List<Predicate> buildConditions(T criteria, Map<String, Object> filters, Root<T> root, CriteriaBuilder cb) {
-        List<Predicate> predicates = new ArrayList<>();
-
-        if (criteria != null) {
-            if (criteria.getCreatedDate() != null) {
-                predicates.add(cb.greaterThanOrEqualTo(root.get(Cat_.createdDate), criteria.getCreatedDate()));
-            }
-
-            if (criteria.getTitle() != null && !criteria.getTitle().trim().isEmpty()) {
-                predicates.add(cb.like(cb.upper(root.get(Cat_.title)), "%" + criteria.getTitle().trim().toUpperCase() + "%"));
-            }
-        }
-        return predicates;
-    }
-
 }

@@ -19,16 +19,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class File extends BaseEntity {
     
-    public enum FileType {
-        IMAGE,
-        MUSIC,
-        VIDEO,
-        THUMB_IMAGE,
-        THUMB_MUSIC,
-        THUMB_VIDEO,
-        UNKNOW
-    }
-
     private static final long serialVersionUID = -2874867851464343753L;
 
     @Column(name = "TITLE", length = 100, nullable = false)
@@ -49,20 +39,6 @@ public class File extends BaseEntity {
     @Transient
     @XmlTransient
     protected InputStream is;
-    
-    @Transient
-    @XmlTransient
-    protected FileType fileType = FileType.UNKNOW;
-
-    public FileType getFileType()
-    {
-        return fileType;
-    }
-
-    public void setFileType(FileType fileType)
-    {
-        this.fileType = fileType;
-    }
     
     public File() {
     }
@@ -117,7 +93,7 @@ public class File extends BaseEntity {
 
     public String getURL() {
         if (isUpload()) {
-            return JsfUtil.getServletContextPath() + "/download-file?id=" + id;
+            return null;//JsfUtil.getServletContextPath() + "/download-file?id=" + id;
         }
         return title;
     }
@@ -128,12 +104,4 @@ public class File extends BaseEntity {
                 + ", fileSize=" + fileSize + ", filePath=" + filePath + '}';
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException
-    {
-        return super.clone(); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
 }

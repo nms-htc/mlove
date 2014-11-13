@@ -19,17 +19,11 @@ import org.primefaces.model.SortOrder;
  */
 public abstract class AbstractLazyDataModel<T extends BaseEntity> extends LazyDataModel<T> {
 
-    private static final long serialVersionUID = -6241362556725345679L;
-    
+    private static final long serialVersionUID = -1137464869996262401L;
+
     protected abstract BaseService<T> getService();
 
-    private T criteria;
-            
-    public AbstractLazyDataModel(T criteria) {
-        this.criteria = criteria;
-    }
-    
-    protected long parserRowKey(String rowKey) {
+    protected Long parserRowKey(String rowKey) {
         return Long.parseLong(rowKey);
     }
 
@@ -45,8 +39,24 @@ public abstract class AbstractLazyDataModel<T extends BaseEntity> extends LazyDa
 
     @Override
     public List<T> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-        this.setRowCount(getService().countForPFDatatable(criteria, filters));
-        return getService().searchForPFDatatable(criteria, first, first, sortField, sortOrder, filters);
+        // modifing filter cirterias.
+        modifyModelFilters(filters);
+
+        boolean asc = false;
+        if (sortOrder != null && sortOrder == SortOrder.ASCENDING) {
+            asc = true;
+        }
+        this.setRowCount(getService().count(filters));
+        return getService().search(first, pageSize, sortField, asc, filters);
+    }
+
+    /**
+     * Override this method to add default predicate for query data model.
+     *
+     * @param filters
+     */
+    protected void modifyModelFilters(Map<String, Object> filters) {
+        /* nothing to say. */
     }
 
 }

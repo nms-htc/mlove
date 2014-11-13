@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ConstraintMode;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,11 +22,11 @@ public class Music extends Product {
 
     private static final long serialVersionUID = -3339759100221558758L;
 
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "THUMBNAIL_FILEID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     protected File thumbFile;
 
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "MAIN_FILEID", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     protected File musicFile;
 

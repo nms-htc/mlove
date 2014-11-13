@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
+ * Category of product.
+ * 
  * @author Nguyen Trong Cuong
  * @since 09/10/2014
  * @version 1.0

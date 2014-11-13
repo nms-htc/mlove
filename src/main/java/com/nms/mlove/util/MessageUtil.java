@@ -14,8 +14,10 @@ import javax.faces.context.FacesContext;
  */
 public class MessageUtil {
 
-    public static final String APP_RESOURCE_BUNDLE_NAME = "Bundle";
+    public static final String APP_RESOURCE_BUNDLE_NAME = "com.nms.i18n.Bundle";
     private static final Logger LOGGER = Logger.getLogger(MessageUtil.class.getName());
+    public static final String REQUEST_SUCCESS_MESSAGE = "your-request-has-been-successfully-implemented";
+    public static final String REQUEST_FAIL_MESSAGE = "your-request-fails";
 
     public static ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle(APP_RESOURCE_BUNDLE_NAME);
@@ -45,7 +47,7 @@ public class MessageUtil {
     public static void addGlobalErrorMessage(String message) {
         addGlobalMessage(FacesMessage.SEVERITY_ERROR, message);
     }
-    
+
     public static void addGlobalErrorMessage(String summary, Throwable t) {
         addGlobalMessage(FacesMessage.SEVERITY_ERROR, summary, JsfUtil.getRootCause(t).getLocalizedMessage());
     }
@@ -64,10 +66,10 @@ public class MessageUtil {
     }
 
     public static void addGlobalMessage(FacesMessage.Severity severity, String message) {
-        FacesMessage msg = new FacesMessage(severity, getBundleMessage(message), getBundleMessage(message));
+        FacesMessage msg = new FacesMessage(severity, getBundleMessage(message), "");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
     public static void addGlobalMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesMessage msg = new FacesMessage(severity, getBundleMessage(summary), getBundleMessage(detail));
         FacesContext.getCurrentInstance().addMessage(null, msg);

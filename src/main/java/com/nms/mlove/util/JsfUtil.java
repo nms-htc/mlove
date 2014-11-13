@@ -1,7 +1,10 @@
 package com.nms.mlove.util;
 
+import com.nms.mlove.exception.AppException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
@@ -10,10 +13,10 @@ import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * JsfUtil functionalitis.
+ *
  * @author Nguyen Trong Cuong (cuongnt1987@gmail.com)
  * @since 08/26/2014
  * @version 1.0
@@ -115,8 +118,27 @@ public class JsfUtil {
     }
 
     public static void addErrorMessages(List<String> messages) {
-        for (String message : messages) {
+        messages.stream().forEach((message) -> {
             addErrorMessage(message);
+        });
+    }
+
+    /**
+     * Process action on
+     *
+     * @param <T>
+     * @param consumer
+     * @param t
+     * @param successMessage
+     * @param errorMessage
+     */
+    public static <T> void processAction(Consumer<T> consumer, T t,
+            String successMessage, String errorMessage) {
+        try {
+            consumer.accept(t);
+            MessageUtil.addGlobalInfoMessage(successMessage);
+        } catch (Exception e) {
+            handleException(e, errorMessage);
         }
     }
 
@@ -152,12 +174,23 @@ public class JsfUtil {
         }
         return "";
     }
-    
-    public static HttpServletRequest getHttpServletRequest() {
-        return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-    }
-    
-    public static String getServletContextPath() {
-        return getHttpServletRequest().getServletContext().getContextPath();
+
+    /**
+     * Handle all exception of system.
+     * 
+     * @param e
+     * @param defaultMessage 
+     */
+    public static void handleException(Exception e, String defaultMessage) {
+        if (e instanceof AppException) {
+            MessageUtil.addGlobalErrorMessage(e);
+        } else {
+            Throwable t = getRootCause(e);
+            if (t instanceof EJBException) {
+                MessageUtil.addGlobalErrorMessage(t);
+            } else {
+                MessageUtil.addGlobalErrorMessage(defaultMessage, t);
+            }
+        }
     }
 }

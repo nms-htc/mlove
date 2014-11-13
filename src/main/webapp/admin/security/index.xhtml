@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="template.xhtml">
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-sm-3 col-md-2">
+                <ul class="nav">
+                    <li class="active"><a href="#">Add new user</a></li>
+                    <li><a href="#">List user</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-9">                    
+                <h2>Danh sach nguoi dung</h2>
+                <div class="row">
+                    <form role="form" class="col-lg-5 col-xs-12">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control col-xs-12 col-lg-5" id="exampleInputEmail1" placeholder="Enter email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">File input</label>
+                        <input type="file" id="exampleInputFile" class="form-control"/>
+                            <p class="help-block">Example block-level help text here.</p>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"/> Check me out
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                </div>
+                
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+
